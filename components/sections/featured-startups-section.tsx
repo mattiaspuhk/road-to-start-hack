@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ArrowRight, Users } from "lucide-react";
@@ -75,10 +76,10 @@ export const FeaturedStartupsSection = ({
                 <div
                   className={`relative flex flex-col ${
                     index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  } items-center gap-6 md:gap-10`}
+                  } items-stretch gap-0 md:gap-0`}
                 >
                   {/* Image with frame effect */}
-                  <div className="relative shrink-0 w-full md:w-auto">
+                  <div className="relative shrink-0 w-full md:w-[500px]">
                     <div
                       className={`absolute inset-0 ${
                         startup.color === "primary"
@@ -90,15 +91,38 @@ export const FeaturedStartupsSection = ({
                           : "-rotate-3 -translate-x-2 translate-y-2"
                       } transition-transform group-hover:rotate-0 group-hover:translate-x-0 group-hover:translate-y-0`}
                     />
-                    <div className="relative overflow-hidden rounded-2xl">
+                    <div
+                      className={`relative overflow-hidden rounded-2xl shadow-xl border border-border/50 bg-card ${
+                        index % 2 === 0
+                          ? "md:rounded-r-none md:rounded-l-2xl"
+                          : "md:rounded-l-none md:rounded-r-2xl"
+                      }`}
+                    >
+                      <div className="relative aspect-[4/3] w-full">
+                        <Image
+                          src={startup.image}
+                          alt={startup.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          sizes="(max-width: 768px) 100vw, 500px"
+                        />
+                        {/* Gradient overlay */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-t ${
+                            startup.color === "primary"
+                              ? "from-primary/40 via-primary/10 to-transparent"
+                              : "from-success/40 via-success/10 to-transparent"
+                          } opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                        />
+                      </div>
                       {/* Sector overlay */}
                       <div
                         className={`absolute top-4 ${
                           index % 2 === 0 ? "left-4" : "right-4"
-                        } px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md ${
+                        } px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg z-10 ${
                           startup.color === "primary"
-                            ? "bg-primary/80 text-primary-foreground"
-                            : "bg-success/80 text-success-foreground"
+                            ? "bg-primary/90 text-primary-foreground"
+                            : "bg-success/90 text-success-foreground"
                         }`}
                       >
                         {startup.sector}
@@ -106,11 +130,13 @@ export const FeaturedStartupsSection = ({
                     </div>
                   </div>
 
-                  {/* Content */}
+                  {/* Content Card - same height as image */}
                   <div
-                    className={`flex-1 ${
-                      index % 2 === 0 ? "md:text-left" : "md:text-right"
-                    }`}
+                    className={`flex-1 bg-card/50 backdrop-blur-sm rounded-xl p-6 md:p-8 border border-border/50 shadow-sm group-hover:shadow-md transition-all duration-300 flex flex-col justify-center md:h-full ${
+                      index % 2 === 0
+                        ? "md:rounded-l-none md:rounded-r-2xl md:border-l-0"
+                        : "md:rounded-r-none md:rounded-l-2xl md:border-r-0"
+                    } ${index % 2 === 0 ? "md:text-left" : "md:text-right"}`}
                   >
                     <h3 className="font-serif text-3xl md:text-4xl text-foreground mb-3 group-hover:text-primary transition-colors">
                       {startup.name}
@@ -147,7 +173,7 @@ export const FeaturedStartupsSection = ({
 
                     {/* Founders */}
                     <div
-                      className={`flex items-center gap-3 text-sm ${
+                      className={`flex items-center gap-3 text-sm mb-6 ${
                         index % 2 === 1 ? "md:justify-end" : ""
                       }`}
                     >
@@ -169,9 +195,7 @@ export const FeaturedStartupsSection = ({
 
                     {/* CTA */}
                     <div
-                      className={`mt-6 ${
-                        index % 2 === 1 ? "md:text-right" : ""
-                      }`}
+                      className={`${index % 2 === 1 ? "md:text-right" : ""}`}
                     >
                       <span
                         className={`inline-flex items-center gap-2 text-sm font-medium ${

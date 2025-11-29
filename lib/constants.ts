@@ -34,6 +34,8 @@ export const featuredStartups = [
       "Building autonomous drone delivery networks to bring essential medicines to underserved rural communities across Germany in under 15 minutes.",
     founders: "Dr. Maria Hoffmann (ex-DHL) & Thomas Weber (ex-Siemens)",
     color: "primary",
+    image:
+      "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&h=600&fit=crop&q=80",
     stats: [
       { label: "Pharmacies", value: "127" },
       { label: "Valuation", value: "€8M" },
@@ -47,6 +49,8 @@ export const featuredStartups = [
     founders:
       "Anna Schmidt (ex-McKinsey) & Dr. Lars Bergström (Climate Scientist)",
     color: "success",
+    image:
+      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=600&fit=crop&q=80",
     stats: [
       { label: "Enterprises", value: "42" },
       { label: "Valuation", value: "€6M" },

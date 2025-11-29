@@ -44,8 +44,9 @@ export const Navbar = () => {
             <NavigationMenu viewport={isMobile}>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link href="/opportunities" legacyBehavior passHref>
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/opportunities"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         isActive("/opportunities") &&
@@ -53,8 +54,8 @@ export const Navbar = () => {
                       )}
                     >
                       Opportunities
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
