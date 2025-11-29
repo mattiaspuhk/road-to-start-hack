@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/opportunities/hero-section";
-import { DossierFeedSection } from "@/components/sections/opportunities/dossier-feed-section";
+import { OpportunitiesCompaniesSection } from "@/components/sections/opportunities/opportunities-companies-section";
 import { BottomMenubar } from "@/components/sections/opportunities/bottom-menubar";
 import { mockOpportunities, collections } from "@/lib/opportunities";
 
@@ -53,7 +53,7 @@ const Opportunities = () => {
           <HeroSection opportunity={featuredOpportunity} />
         )}
 
-        <DossierFeedSection
+        <OpportunitiesCompaniesSection
           opportunities={dossierOpportunities}
           activeCollection={activeCollection}
           setActiveCollection={setActiveCollection}

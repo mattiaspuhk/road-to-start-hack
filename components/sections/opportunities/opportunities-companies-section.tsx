@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, TrendingUp, TrendingDown } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import { PriceGraph } from "@/components/ui/price-graph";
 import { Opportunity } from "@/lib/opportunities";
 import { collections } from "@/lib/opportunities";
@@ -21,19 +20,19 @@ const getCompanyImage = (opp: Opportunity) => {
   );
 };
 
-interface DossierFeedSectionProps {
+interface OpportunitiesCompaniesProps {
   opportunities: Opportunity[];
   activeCollection: string | null;
   setActiveCollection: (collectionId: string | null) => void;
   isListView?: boolean;
 }
 
-export const DossierFeedSection = ({
+export const OpportunitiesCompaniesSection = ({
   opportunities,
   activeCollection,
   setActiveCollection,
   isListView = false,
-}: DossierFeedSectionProps) => {
+}: OpportunitiesCompaniesProps) => {
   const collectionTitle = activeCollection
     ? collections.find((c) => c.id === activeCollection)?.title
     : "Investment Briefs";
@@ -213,32 +212,6 @@ export const DossierFeedSection = ({
                         currentPrice={opp.sharePrice}
                         className="h-full"
                       />
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                    {opp.founderName && (
-                      <p className="text-xs text-muted-foreground">
-                        {opp.founderName}
-                        {opp.founderTitle && ` • ${opp.founderTitle}`}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-3 ml-auto">
-                      <div className="text-right">
-                        <div className="text-xs font-medium text-muted-foreground mb-0.5">
-                          Funding
-                        </div>
-                        <div className="text-base font-extrabold text-foreground">
-                          {opp.fundingProgress}%
-                        </div>
-                      </div>
-                      <div className="w-20">
-                        <Progress
-                          value={opp.fundingProgress}
-                          className="h-2 bg-muted [&>div]:bg-foreground/80"
-                        />
-                      </div>
                     </div>
                   </div>
                 </Link>

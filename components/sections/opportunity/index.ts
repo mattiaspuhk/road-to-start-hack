@@ -1,0 +1,10 @@
+export { HeroSection } from "./hero-section";
+export { StorySection } from "./story-section";
+export { HowItWorksSection } from "./how-it-works-section";
+export { TractionSection } from "./traction-section";
+export { TeamSection } from "./team-section";
+export { InvestmentTimelineSection } from "./investment-timeline-section";
+export { AskQuestionsSection } from "./ask-questions-section";
+export { FloatingInvestCTA } from "./floating-invest-cta";
+export { CompanyMetricsCard } from "./company-metrics-card";
+export { MyPositionCard } from "./my-position-card";

@@ -72,8 +72,8 @@ export function PriceGraph({
               x2="0"
               y2="1"
             >
-              <stop offset="5%" stopColor={color} stopOpacity={0.4} />
-              <stop offset="95%" stopColor={color} stopOpacity={0.1} />
+              <stop offset="5%" stopColor={color} stopOpacity={0.7} />
+              <stop offset="95%" stopColor={color} stopOpacity={0.2} />
             </linearGradient>
           </defs>
           <CartesianGrid
@@ -98,7 +98,7 @@ export function PriceGraph({
             }
           />
           <Area
-            type="monotone"
+            type="natural"
             dataKey="price"
             stroke={color}
             strokeWidth={3}

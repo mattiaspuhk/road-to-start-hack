@@ -234,4 +234,8 @@
       transform: scale(1);
     }
   }
+
+  .transform-origin-bottom-right {
+    transform-origin: bottom right;
+  }
 }
