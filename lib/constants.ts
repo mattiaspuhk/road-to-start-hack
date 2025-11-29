@@ -57,3 +57,103 @@ export const featuredStartups = [
     ],
   },
 ];
+
+export const thematicCollections = [
+  {
+    id: "all",
+    name: "All Opportunities",
+    description: "View all investment opportunities",
+    icon: null,
+  },
+  {
+    id: "green",
+    name: "The Green Transition",
+    description: "Climate technology & sustainable systems",
+    icon: "leaf",
+  },
+  {
+    id: "sovereignty",
+    name: "European Sovereignty",
+    description: "Critical infrastructure & security",
+    icon: "shield",
+  },
+  {
+    id: "ai",
+    name: "AI for the Real World",
+    description: "Healthcare & industrial automation",
+    icon: "cpu",
+  },
+];
+
+export const investmentOpportunities = [
+  {
+    id: "1",
+    founderInitials: "LvdB",
+    founderName: "Lars van der Berg",
+    founderTitle: "CEO & Founder",
+    category: "CLEANTECH",
+    location: "Netherlands",
+    projectName: "GreenGrid Energy",
+    description:
+      "AI-driven solar optimization reducing energy costs by 40% for small businesses. 340 installations across Benelux.",
+    leadInvestor: "EQT Ventures",
+    committed: 42,
+    theme: "green",
+  },
+  {
+    id: "2",
+    founderInitials: "MH",
+    founderName: "Dr. Maria Hoffmann",
+    founderTitle: "CEO & Co-Founder",
+    category: "HEALTHTECH",
+    location: "Germany",
+    projectName: "SkyMed Delivery",
+    description:
+      "Autonomous drone network delivering pharmaceuticals to 2,400+ rural pharmacies. Pilots active with AOK and Deutsche Post.",
+    leadInvestor: "High-Tech Gründerfonds",
+    committed: 65,
+    theme: "ai",
+  },
+  {
+    id: "3",
+    founderInitials: "AS",
+    founderName: "Anna Schmidt",
+    founderTitle: "CEO & Co-Founder",
+    category: "CLEANTECH",
+    location: "Germany",
+    projectName: "CarbonLedger",
+    description:
+      "Enterprise carbon accounting platform using AI to automatically track, report, and reduce emissions across global supply chains.",
+    leadInvestor: "Earlybird Venture Capital",
+    committed: 78,
+    theme: "green",
+  },
+  {
+    id: "4",
+    founderInitials: "JP",
+    founderName: "Jean-Pierre Dubois",
+    founderTitle: "CEO & Founder",
+    category: "DEEPTECH",
+    location: "France",
+    projectName: "SecureNet EU",
+    description:
+      "Next-generation cybersecurity platform protecting critical European infrastructure from advanced persistent threats.",
+    leadInvestor: "Partech",
+    committed: 55,
+    theme: "sovereignty",
+  },
+  {
+    id: "5",
+    founderInitials: "EK",
+    founderName: "Erik Karlsson",
+    founderTitle: "CEO & Co-Founder",
+    category: "AUTOMATION",
+    location: "Sweden",
+    projectName: "FactoryAI",
+    description:
+      "Industrial automation platform using computer vision and robotics to optimize manufacturing processes. Deployed in 12 factories across Scandinavia.",
+    leadInvestor: "Creandum",
+    committed: 38,
+    theme: "ai",
+  },
+];

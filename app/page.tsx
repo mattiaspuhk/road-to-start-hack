@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { AnimatedBackground } from "@/components/sections/animated-background";
-import { HeroSection } from "@/components/sections/hero-section";
-import { StatsSection } from "@/components/sections/stats-section";
-import { FeaturedStartupsSection } from "@/components/sections/featured-startups-section";
-import { ValuePropsSection } from "@/components/sections/value-props-section";
-import { CTASection } from "@/components/sections/cta-section";
+import { AnimatedBackground } from "@/components/sections/index/animated-background";
+import { HeroSection } from "@/components/sections/index/hero-section";
+import { StatsSection } from "@/components/sections/index/stats-section";
+import { FeaturedStartupsSection } from "@/components/sections/index/featured-startups-section";
+import { ValuePropsSection } from "@/components/sections/index/value-props-section";
+import { CTASection } from "@/components/sections/index/cta-section";
 
 export default function Index() {
   const router = useRouter();
@@ -22,10 +22,8 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
-
       <main className="relative">
         <AnimatedBackground />
-
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <HeroSection
             industry={industry}
