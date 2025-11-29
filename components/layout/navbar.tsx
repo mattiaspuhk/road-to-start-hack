@@ -3,7 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { User, Menu, X, Sparkles, Info } from "lucide-react";
+import { Menu, X, Sparkles, Info } from "lucide-react";
+import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,6 +21,7 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  const { isSignedIn } = useUser();
 
   const isActive = (path: string) => pathname === path;
 
@@ -132,13 +134,26 @@ export const Navbar = () => {
 
           {/* Right side */}
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="hidden md:flex">
-              <User className="w-4 h-4 mr-2" />
-              Sign In
-            </Button>
-            <Button variant="default" size="sm" className="hidden md:flex">
-              Get Started
-            </Button>
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" />
+            ) : (
+              <>
+                <SignInButton mode="modal">
+                  <Button variant="ghost" size="sm" className="hidden md:flex">
+                    Sign In
+                  </Button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="hidden md:flex"
+                  >
+                    Get Started
+                  </Button>
+                </SignUpButton>
+              </>
+            )}
             <Button
               variant="ghost"
               size="icon"
@@ -223,12 +238,24 @@ export const Navbar = () => {
                 </a>
               </div>
               <div className="flex gap-2 pt-2">
-                <Button variant="ghost" size="sm" className="flex-1">
-                  Sign In
-                </Button>
-                <Button variant="default" size="sm" className="flex-1">
-                  Get Started
-                </Button>
+                {isSignedIn ? (
+                  <div className="flex-1 flex justify-center">
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
+                ) : (
+                  <>
+                    <SignInButton mode="modal">
+                      <Button variant="ghost" size="sm" className="flex-1">
+                        Sign In
+                      </Button>
+                    </SignInButton>
+                    <SignUpButton mode="modal">
+                      <Button variant="default" size="sm" className="flex-1">
+                        Get Started
+                      </Button>
+                    </SignUpButton>
+                  </>
+                )}
               </div>
             </div>
           </div>
