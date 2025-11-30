@@ -23,7 +23,10 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import type { OpportunityDetailData, PriceHistoryPoint } from "@/lib/opportunity-detail-types";
+import type {
+  OpportunityDetailData,
+  PriceHistoryPoint,
+} from "@/lib/opportunity-detail-types";
 
 type Timeframe = "1D" | "1W" | "1M" | "1Y" | "YTD";
 
@@ -117,7 +120,9 @@ export function HeroSection({ data, rawPriceHistory }: HeroSectionProps) {
                   className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
                 >
                   <Globe className="w-4 h-4" />
-                  <span>{data.company.website.replace(/^https?:\/\//, '')}</span>
+                  <span>
+                    {data.company.website.replace(/^https?:\/\//, "")}
+                  </span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               )}
@@ -190,7 +195,20 @@ function generateChartData(rawPriceHistory: number[], timeframe: Timeframe) {
       }));
     }
     case "1Y": {
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
       const step = Math.max(1, Math.floor(rawPriceHistory.length / 12));
       const prices: number[] = [];
       for (let i = 0; i < 12 && i * step < rawPriceHistory.length; i++) {
@@ -202,11 +220,31 @@ function generateChartData(rawPriceHistory: number[], timeframe: Timeframe) {
       }));
     }
     case "YTD": {
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
       const monthsToShow = currentMonth + 1;
-      const step = Math.max(1, Math.floor(rawPriceHistory.length / monthsToShow));
+      const step = Math.max(
+        1,
+        Math.floor(rawPriceHistory.length / monthsToShow)
+      );
       const prices: number[] = [];
-      for (let i = 0; i < monthsToShow && i * step < rawPriceHistory.length; i++) {
+      for (
+        let i = 0;
+        i < monthsToShow && i * step < rawPriceHistory.length;
+        i++
+      ) {
         prices.push(rawPriceHistory[i * step]);
       }
       return prices.map((price, i) => ({
@@ -224,12 +262,18 @@ function generateChartData(rawPriceHistory: number[], timeframe: Timeframe) {
 
 function getTimeframeLabel(timeframe: Timeframe): string {
   switch (timeframe) {
-    case "1D": return "Today";
-    case "1W": return "Past week";
-    case "1M": return "Past month";
-    case "1Y": return "Past year";
-    case "YTD": return "Year to date";
-    default: return "";
+    case "1D":
+      return "Today";
+    case "1W":
+      return "Past week";
+    case "1M":
+      return "Past month";
+    case "1Y":
+      return "Past year";
+    case "YTD":
+      return "Year to date";
+    default:
+      return "";
   }
 }
 
@@ -248,6 +292,16 @@ function SharePriceCard({
     () => generateChartData(rawPriceHistory, selectedTimeframe),
     [rawPriceHistory, selectedTimeframe]
   );
+
+  const yAxisDomain = useMemo(() => {
+    if (chartData.length === 0) return [0, 100];
+    const prices = chartData.map((d) => d.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const range = maxPrice - minPrice;
+    const padding = Math.max(range * 0.1, minPrice * 0.05); // 10% of range or 5% of min, whichever is larger
+    return [Math.max(0, minPrice - padding), maxPrice + padding];
+  }, [chartData]);
 
   const priceChange = useMemo(() => {
     if (chartData.length < 2) return "0.0";
@@ -270,16 +324,16 @@ function SharePriceCard({
             </span>
             <span
               className={`text-sm font-medium font-mono ${
-                Number(priceChange) >= 0
-                  ? "text-emerald-400"
-                  : "text-rose-400"
+                Number(priceChange) >= 0 ? "text-emerald-400" : "text-rose-400"
               }`}
             >
               {Number(priceChange) >= 0 ? "+" : ""}
               {priceChange}%
             </span>
           </div>
-          <p className="text-xs text-white/40 mt-1">{getTimeframeLabel(selectedTimeframe)}</p>
+          <p className="text-xs text-white/40 mt-1">
+            {getTimeframeLabel(selectedTimeframe)}
+          </p>
         </div>
       </div>
 
@@ -306,13 +360,7 @@ function SharePriceCard({
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
-              <linearGradient
-                id="priceGradient"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
+              <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="0%"
                   stopColor="hsl(var(--primary))"
@@ -332,7 +380,7 @@ function SharePriceCard({
               tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }}
             />
             <YAxis
-              domain={["dataMin - 0.2", "dataMax + 0.2"]}
+              domain={yAxisDomain}
               axisLine={false}
               tickLine={false}
               tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }}
@@ -357,11 +405,13 @@ function SharePriceCard({
               }}
             />
             <Area
-              type="monotone"
+              type="linear"
               dataKey="price"
               stroke="hsl(var(--primary))"
-              strokeWidth={3}
+              strokeWidth={2.5}
               fill="url(#priceGradient)"
+              dot={false}
+              activeDot={{ r: 4, fill: "hsl(var(--primary))", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -370,7 +420,9 @@ function SharePriceCard({
       <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10">
         <div>
           <p className="text-xs text-white/40 mb-1">Valuation</p>
-          <p className="text-lg font-medium font-mono text-white">{valuation}</p>
+          <p className="text-lg font-medium font-mono text-white">
+            {valuation}
+          </p>
         </div>
         <div>
           <p className="text-xs text-white/40 mb-1">Lead Investor</p>

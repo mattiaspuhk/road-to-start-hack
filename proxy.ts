@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Minimal proxy hook to keep optional global logic in the Node.js runtime
-// Auth is handled at the page/component level using Clerk's auth() helper
-export function proxy(_request: NextRequest) {
+export default function proxy(_request: NextRequest) {
   return NextResponse.next();
 }
 

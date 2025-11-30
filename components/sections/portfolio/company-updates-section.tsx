@@ -15,7 +15,12 @@ import {
 } from "lucide-react";
 import { Opportunity } from "@/lib/opportunities";
 
-type NewsType = "expansion" | "partnership" | "funding" | "milestone" | "financial";
+type NewsType =
+  | "expansion"
+  | "partnership"
+  | "funding"
+  | "milestone"
+  | "financial";
 
 interface NewsItem {
   id: string;
@@ -37,9 +42,16 @@ interface CompanyUpdatesSectionProps {
   news: NewsItem[];
 }
 
-const typeConfig: Record<NewsType, { icon: typeof Newspaper; color: string; label: string }> = {
+const typeConfig: Record<
+  NewsType,
+  { icon: typeof Newspaper; color: string; label: string }
+> = {
   expansion: { icon: Rocket, color: "text-primary", label: "Expansion" },
-  partnership: { icon: Handshake, color: "text-teal-600", label: "Partnership" },
+  partnership: {
+    icon: Handshake,
+    color: "text-teal-600",
+    label: "Partnership",
+  },
   funding: { icon: DollarSign, color: "text-success", label: "Funding" },
   milestone: { icon: Trophy, color: "text-amber-600", label: "Milestone" },
   financial: { icon: BarChart3, color: "text-slate-600", label: "Financial" },
@@ -47,22 +59,56 @@ const typeConfig: Record<NewsType, { icon: typeof Newspaper; color: string; labe
 
 const getCompanyImage = (id: string) => {
   const imageMap: Record<string, string> = {
-    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center",
-    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center",
-    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center",
-    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center",
-    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center",
-    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center",
+    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center", // SkyMed - drone
+    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center", // GreenGrid - solar
+    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // FarmSense - agriculture
+    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center", // SecureID - security
+    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center", // MediBot - medical
+    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center", // CircularPack - packaging
+    "7": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=200&fit=crop&crop=center", // Mistral AI - AI/tech
+    "8": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=200&fit=crop&crop=center", // EduFlow - education
+    "9": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=200&h=200&fit=crop&crop=center", // PropTech - building
+    "10": "https://images.unsplash.com/photo-1556910103-2c027eb7e2cf?w=200&h=200&fit=crop&crop=center", // FoodWaste AI - restaurant
+    "11": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=200&h=200&fit=crop&crop=center", // MobilityHub - transport
+    "12": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200&h=200&fit=crop&crop=center", // CarbonLedger - data/tech
+    "13": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=200&h=200&fit=crop&crop=center", // BioPharm - lab
+    "14": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // QuantumSecure - tech
+    "15": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // AgriData - farming
+    "16": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&crop=center", // FinFlow - finance
+    "17": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=200&fit=crop&crop=center", // HealthMonitor - medical device
+    "18": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=200&h=200&fit=crop&crop=center", // WindOpt - wind energy
+    "19": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=200&h=200&fit=crop&crop=center", // BlockchainPay - crypto
+    "20": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=200&h=200&fit=crop&crop=center", // RoboCare - robot
+    "21": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop&crop=center", // WaterSense - water
+    "22": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=200&h=200&fit=crop&crop=center", // LearnAI - education
+    "23": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=200&h=200&fit=crop&crop=center", // SmartGrid - energy grid
+    "24": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=200&h=200&fit=crop&crop=center", // MedSupply - pharma
+    "25": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&crop=center", // InsurTech - insurance
+    "26": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // AgriRobotics - farming robot
+    "27": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // DeepCode - coding
+    "28": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop&crop=center", // RecycleAI - recycling
+    "29": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=200&fit=crop&crop=center", // TeleHealth - telemedicine
+    "30": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // NeuralLink - brain tech
   };
-  return imageMap[id] || "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=200&h=200&fit=crop&crop=center";
+  return (
+    imageMap[id] ||
+    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=200&h=200&fit=crop&crop=center"
+  );
 };
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
-export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionProps) {
+export function CompanyUpdatesSection({
+  holdings,
+  news,
+}: CompanyUpdatesSectionProps) {
   const [expandedCompany, setExpandedCompany] = useState<string | null>(null);
 
   const toggleCompany = (companyId: string) => {
@@ -100,7 +146,9 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
               <button
                 onClick={() => hasNews && toggleCompany(holding.opportunityId)}
                 className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${
-                  hasNews ? "hover:bg-muted/30 cursor-pointer" : "cursor-default"
+                  hasNews
+                    ? "hover:bg-muted/30 cursor-pointer"
+                    : "cursor-default"
                 }`}
                 disabled={!hasNews}
               >
@@ -124,7 +172,10 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{companyNews.length} update{companyNews.length !== 1 ? "s" : ""}</span>
+                    <span>
+                      {companyNews.length} update
+                      {companyNews.length !== 1 ? "s" : ""}
+                    </span>
                     {companyNews.length > 0 && (
                       <>
                         <span className="text-muted-foreground/40">•</span>
@@ -150,17 +201,18 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
                     const Icon = config.icon;
 
                     return (
-                      <div
-                        key={item.id}
-                        className="px-4 py-3 bg-muted/10"
-                      >
+                      <div key={item.id} className="px-4 py-3 bg-muted/10">
                         <div className="flex items-start gap-3">
-                          <div className={`p-1.5 rounded-md bg-muted/50 ${config.color}`}>
+                          <div
+                            className={`p-1.5 rounded-md bg-muted/50 ${config.color}`}
+                          >
                             <Icon className="w-3.5 h-3.5" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className={`text-xs font-medium ${config.color}`}>
+                              <span
+                                className={`text-xs font-medium ${config.color}`}
+                              >
                                 {config.label}
                               </span>
                               <span className="text-xs text-muted-foreground">

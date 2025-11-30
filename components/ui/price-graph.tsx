@@ -1,6 +1,6 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid } from "recharts";
+import { Area, AreaChart, CartesianGrid, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -28,6 +28,13 @@ export function PriceGraph({
     priceHistory.reduce((a, b) => a + b, 0) / priceHistory.length;
   const priceRange = maxPrice - minPrice;
   const volatility = (priceRange / avgPrice) * 100;
+
+  // Calculate Y-axis domain with dynamic padding for better visibility
+  const yAxisPadding = Math.max(priceRange * 0.1, minPrice * 0.05);
+  const yAxisDomain = [
+    Math.max(0, minPrice - yAxisPadding),
+    maxPrice + yAxisPadding,
+  ];
 
   const chartData = priceHistory.map((price, index) => ({
     day: index + 1,
@@ -64,6 +71,7 @@ export function PriceGraph({
           data={chartData}
           margin={{ top: 12, right: 12, bottom: 12, left: 12 }}
         >
+          <YAxis domain={yAxisDomain} hide />
           <defs>
             <linearGradient
               id={`gradient-${isUpward ? "up" : "down"}`}
@@ -98,14 +106,14 @@ export function PriceGraph({
             }
           />
           <Area
-            type="natural"
+            type="linear"
             dataKey="price"
             stroke={color}
-            strokeWidth={3}
+            strokeWidth={2.5}
             fill={`url(#gradient-${isUpward ? "up" : "down"})`}
             fillOpacity={1}
             dot={false}
-            activeDot={{ r: 6, fill: color, strokeWidth: 2 }}
+            activeDot={{ r: 5, fill: color, strokeWidth: 2 }}
           />
         </AreaChart>
       </ChartContainer>

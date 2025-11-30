@@ -7,12 +7,36 @@ import { collections } from "@/lib/opportunities";
 
 const getCompanyImage = (opp: Opportunity) => {
   const imageMap: Record<string, string> = {
-    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center",
-    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center",
-    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center",
-    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center",
-    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center",
-    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center",
+    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center", // SkyMed - drone
+    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center", // GreenGrid - solar
+    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // FarmSense - agriculture
+    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center", // SecureID - security
+    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center", // MediBot - medical
+    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center", // CircularPack - packaging
+    "7": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=200&fit=crop&crop=center", // Mistral AI - AI/tech
+    "8": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=200&fit=crop&crop=center", // EduFlow - education
+    "9": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=200&h=200&fit=crop&crop=center", // PropTech - building
+    "10": "https://images.unsplash.com/photo-1556910103-2c027eb7e2cf?w=200&h=200&fit=crop&crop=center", // FoodWaste AI - restaurant
+    "11": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=200&h=200&fit=crop&crop=center", // MobilityHub - transport
+    "12": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200&h=200&fit=crop&crop=center", // CarbonLedger - data/tech
+    "13": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=200&h=200&fit=crop&crop=center", // BioPharm - lab
+    "14": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // QuantumSecure - tech
+    "15": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // AgriData - farming
+    "16": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&crop=center", // FinFlow - finance
+    "17": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=200&fit=crop&crop=center", // HealthMonitor - medical device
+    "18": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=200&h=200&fit=crop&crop=center", // WindOpt - wind energy
+    "19": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=200&h=200&fit=crop&crop=center", // BlockchainPay - crypto
+    "20": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=200&h=200&fit=crop&crop=center", // RoboCare - robot
+    "21": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop&crop=center", // WaterSense - water
+    "22": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=200&h=200&fit=crop&crop=center", // LearnAI - education
+    "23": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=200&h=200&fit=crop&crop=center", // SmartGrid - energy grid
+    "24": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=200&h=200&fit=crop&crop=center", // MedSupply - pharma
+    "25": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop&crop=center", // InsurTech - insurance
+    "26": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // AgriRobotics - farming robot
+    "27": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // DeepCode - coding
+    "28": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop&crop=center", // RecycleAI - recycling
+    "29": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&h=200&fit=crop&crop=center", // TeleHealth - telemedicine
+    "30": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center", // NeuralLink - brain tech
   };
   return (
     imageMap[opp.id] ||
