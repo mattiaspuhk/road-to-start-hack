@@ -18,16 +18,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (config) => {
-    // Ignore hardhat and related packages
-    config.externals.push({
-      hardhat: "commonjs hardhat",
-      "@nomicfoundation/hardhat-toolbox":
-        "commonjs @nomicfoundation/hardhat-toolbox",
-    });
-
-    return config;
-  },
 };
 
 export default nextConfig;
