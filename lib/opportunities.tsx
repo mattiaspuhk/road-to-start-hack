@@ -5,8 +5,11 @@ export interface Opportunity {
   name: string;
   tagline: string;
   sector: string;
+  vertical: string;
   stage: string;
   location: string;
+  foundingYear: number;
+  sharesAvailablePercent: number;
   valuation: string;
   minInvestment: number;
   runwayMonths: number;
@@ -38,8 +41,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "SkyMed Delivery",
     tagline: "Autonomous drone delivery for rural pharmacies",
     sector: "HealthTech",
+    vertical: "Medical Logistics",
     stage: "Seed",
     location: "Germany",
+    foundingYear: 2021,
+    sharesAvailablePercent: 12,
     valuation: "€8M",
     minInvestment: 100,
     runwayMonths: 6,
@@ -66,8 +72,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "GreenGrid Energy",
     tagline: "AI-optimized solar panel networks for SMEs",
     sector: "CleanTech",
+    vertical: "Renewable Energy",
     stage: "Series A",
     location: "Netherlands",
+    foundingYear: 2019,
+    sharesAvailablePercent: 8,
     valuation: "€22M",
     minInvestment: 250,
     runwayMonths: 14,
@@ -94,8 +103,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "FarmSense",
     tagline: "Precision agriculture sensors for European farmers",
     sector: "AgriTech",
+    vertical: "Precision Farming",
     stage: "Seed",
     location: "France",
+    foundingYear: 2022,
+    sharesAvailablePercent: 15,
     valuation: "€5M",
     minInvestment: 50,
     runwayMonths: 9,
@@ -122,8 +134,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "SecureID Labs",
     tagline: "Decentralized identity verification for banks",
     sector: "FinTech",
+    vertical: "Identity & Security",
     stage: "Series A",
     location: "Austria",
+    foundingYear: 2020,
+    sharesAvailablePercent: 6,
     valuation: "€15M",
     minInvestment: 500,
     runwayMonths: 18,
@@ -150,8 +165,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "MediBot",
     tagline: "AI diagnostic assistant for rural clinics",
     sector: "HealthTech",
+    vertical: "AI Diagnostics",
     stage: "Pre-Seed",
     location: "Spain",
+    foundingYear: 2023,
+    sharesAvailablePercent: 20,
     valuation: "€3M",
     minInvestment: 100,
     runwayMonths: 4,
@@ -178,8 +196,11 @@ export const mockOpportunities: Opportunity[] = [
     name: "CircularPack",
     tagline: "Reusable packaging logistics for e-commerce",
     sector: "CleanTech",
+    vertical: "Circular Economy",
     stage: "Seed",
     location: "Belgium",
+    foundingYear: 2021,
+    sharesAvailablePercent: 10,
     valuation: "€6M",
     minInvestment: 150,
     runwayMonths: 11,
@@ -202,6 +223,38 @@ export const mockOpportunities: Opportunity[] = [
     votingPremiumType: "fixed",
   },
 ];
+
+export interface OpportunityFilters {
+  location: string | null;
+  sector: string | null;
+  vertical: string | null;
+  foundingYear: number | null;
+  stage: string | null;
+  sharesAvailableMin: number | null;
+}
+
+export const defaultFilters: OpportunityFilters = {
+  location: null,
+  sector: null,
+  vertical: null,
+  foundingYear: null,
+  stage: null,
+  sharesAvailableMin: null,
+};
+
+export const filterOptions = {
+  locations: [...new Set(mockOpportunities.map((o) => o.location))].sort(),
+  sectors: [...new Set(mockOpportunities.map((o) => o.sector))].sort(),
+  verticals: [...new Set(mockOpportunities.map((o) => o.vertical))].sort(),
+  foundingYears: [...new Set(mockOpportunities.map((o) => o.foundingYear))].sort((a, b) => b - a),
+  stages: ["Pre-Seed", "Seed", "Series A", "Series B"],
+  sharesRanges: [
+    { label: "Any", value: null },
+    { label: "5%+", value: 5 },
+    { label: "10%+", value: 10 },
+    { label: "15%+", value: 15 },
+  ],
+};
 
 export const collections: ThematicCollection[] = [
   {

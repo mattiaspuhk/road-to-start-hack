@@ -5,12 +5,20 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/opportunities/hero-section";
 import { OpportunitiesCompaniesSection } from "@/components/sections/opportunities/opportunities-companies-section";
 import { BottomMenubar } from "@/components/sections/opportunities/bottom-menubar";
-import { mockOpportunities, collections } from "@/lib/opportunities";
+import {
+  mockOpportunities,
+  collections,
+  OpportunityFilters,
+  defaultFilters,
+} from "@/lib/opportunities";
 
 const Opportunities = () => {
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
   const [isListView, setIsListView] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<OpportunityFilters>(defaultFilters);
+
+  const hasActiveFilters = Object.values(filters).some((v) => v !== null);
 
   const filteredOpportunities = mockOpportunities.filter((opp) => {
     if (activeCollection) {
@@ -19,6 +27,14 @@ const Opportunities = () => {
         return false;
       }
     }
+
+    // Apply filters
+    if (filters.location && opp.location !== filters.location) return false;
+    if (filters.sector && opp.sector !== filters.sector) return false;
+    if (filters.vertical && opp.vertical !== filters.vertical) return false;
+    if (filters.foundingYear && opp.foundingYear !== filters.foundingYear) return false;
+    if (filters.stage && opp.stage !== filters.stage) return false;
+    if (filters.sharesAvailableMin && opp.sharesAvailablePercent < filters.sharesAvailableMin) return false;
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -38,7 +54,7 @@ const Opportunities = () => {
 
   const featuredOpportunity = mockOpportunities[0];
   const dossierOpportunities =
-    activeCollection || searchQuery
+    activeCollection || searchQuery || hasActiveFilters
       ? filteredOpportunities
       : mockOpportunities.slice(1);
 
@@ -47,7 +63,7 @@ const Opportunities = () => {
       <Navbar />
 
       <main>
-        {!activeCollection && !searchQuery && (
+        {!activeCollection && !searchQuery && !hasActiveFilters && (
           <HeroSection opportunity={featuredOpportunity} />
         )}
 
@@ -68,6 +84,8 @@ const Opportunities = () => {
         setSearchQuery={setSearchQuery}
         onListViewToggle={() => setIsListView(!isListView)}
         isListView={isListView}
+        filters={filters}
+        setFilters={setFilters}
       />
     </div>
   );

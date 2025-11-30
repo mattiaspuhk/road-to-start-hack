@@ -1,6 +1,11 @@
 "use client";
-import { Search, List, X } from "lucide-react";
-import { collections } from "@/lib/opportunities";
+import { Search, List, X, SlidersHorizontal, ChevronDown } from "lucide-react";
+import {
+  collections,
+  OpportunityFilters,
+  filterOptions,
+  defaultFilters,
+} from "@/lib/opportunities";
 import { useState, useEffect, useRef } from "react";
 
 interface BottomMenubarProps {
@@ -10,6 +15,8 @@ interface BottomMenubarProps {
   setSearchQuery: (query: string) => void;
   onListViewToggle?: () => void;
   isListView?: boolean;
+  filters: OpportunityFilters;
+  setFilters: (filters: OpportunityFilters) => void;
 }
 
 export const BottomMenubar = ({
@@ -19,61 +26,32 @@ export const BottomMenubar = ({
   setSearchQuery,
   onListViewToggle,
   isListView = false,
+  filters,
+  setFilters,
 }: BottomMenubarProps) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const hasBeenVisibleRef = useRef(false);
-  const lastScrollYRef = useRef(0);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const filterPanelRef = useRef<HTMLDivElement>(null);
 
+  const activeFilterCount = Object.values(filters).filter((v) => v !== null).length;
+
+  // Close filter panel on outside click
   useEffect(() => {
-    const checkInitialScroll = () => {
-      const scrollY = window.scrollY;
-      lastScrollYRef.current = scrollY;
-      if (scrollY > 200) {
-        setIsVisible(true);
-        hasBeenVisibleRef.current = true;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterPanelRef.current && !filterPanelRef.current.contains(event.target as Node)) {
+        setIsFiltersOpen(false);
       }
     };
 
-    checkInitialScroll();
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const scrollDelta = scrollY - lastScrollYRef.current;
-      lastScrollYRef.current = scrollY;
-
-      if (scrollY > 200) {
-        hasBeenVisibleRef.current = true;
-        setIsVisible(true);
-      } else if (
-        scrollY < 50 &&
-        hasBeenVisibleRef.current &&
-        scrollDelta < -10
-      ) {
-        setIsVisible(false);
-        hasBeenVisibleRef.current = false;
-      } else if (hasBeenVisibleRef.current) {
-        setIsVisible(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (hasBeenVisibleRef.current) {
-      const checkVisibility = () => {
-        if (hasBeenVisibleRef.current) {
-          setIsVisible(true);
-        }
-      };
-      requestAnimationFrame(checkVisibility);
+    if (isFiltersOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
     }
-  }, [activeCollection, searchQuery]);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isFiltersOpen]);
 
   const handleSearchClick = () => {
     setIsSearchOpen(true);
+    setIsFiltersOpen(false);
   };
 
   const handleSearchClose = () => {
@@ -81,13 +59,154 @@ export const BottomMenubar = ({
     setSearchQuery("");
   };
 
+  const handleFilterToggle = () => {
+    setIsFiltersOpen(!isFiltersOpen);
+    setIsSearchOpen(false);
+  };
+
+  const handleClearFilters = () => {
+    setFilters(defaultFilters);
+  };
+
+  const updateFilter = <K extends keyof OpportunityFilters>(
+    key: K,
+    value: OpportunityFilters[K]
+  ) => {
+    setFilters({ ...filters, [key]: value });
+  };
+
   return (
-    <div
-      className={`fixed bottom-4 left-0 right-0 z-50 pointer-events-none transition-all duration-500 ease-out ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
-      }`}
-    >
-      <div className="flex justify-center px-4 pb-2 pointer-events-auto">
+    <div className="fixed bottom-4 left-0 right-0 z-50 pointer-events-none">
+      <div className="flex flex-col items-center px-4 pb-2 pointer-events-auto" ref={filterPanelRef}>
+        {/* Filter Panel */}
+        <div
+          className={`mb-3 bg-background/95 backdrop-blur-2xl border border-border/60 rounded-2xl shadow-2xl ring-1 ring-border/20 p-4 transition-all duration-300 ${
+            isFiltersOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
+          }`}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-medium text-foreground">Filters</span>
+            {activeFilterCount > 0 && (
+              <button
+                onClick={handleClearFilters}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            {/* Location Filter */}
+            <div className="relative">
+              <select
+                value={filters.location || ""}
+                onChange={(e) => updateFilter("location", e.target.value || null)}
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Location</option>
+                {filterOptions.locations.map((loc) => (
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+
+            {/* Sector Filter */}
+            <div className="relative">
+              <select
+                value={filters.sector || ""}
+                onChange={(e) => updateFilter("sector", e.target.value || null)}
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Sector</option>
+                {filterOptions.sectors.map((sector) => (
+                  <option key={sector} value={sector}>
+                    {sector}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+
+            {/* Vertical Filter */}
+            <div className="relative">
+              <select
+                value={filters.vertical || ""}
+                onChange={(e) => updateFilter("vertical", e.target.value || null)}
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Vertical</option>
+                {filterOptions.verticals.map((vertical) => (
+                  <option key={vertical} value={vertical}>
+                    {vertical}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+
+            {/* Founding Year Filter */}
+            <div className="relative">
+              <select
+                value={filters.foundingYear || ""}
+                onChange={(e) =>
+                  updateFilter("foundingYear", e.target.value ? parseInt(e.target.value) : null)
+                }
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Founded</option>
+                {filterOptions.foundingYears.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+
+            {/* Stage Filter */}
+            <div className="relative">
+              <select
+                value={filters.stage || ""}
+                onChange={(e) => updateFilter("stage", e.target.value || null)}
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Stage</option>
+                {filterOptions.stages.map((stage) => (
+                  <option key={stage} value={stage}>
+                    {stage}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+
+            {/* Shares Available Filter */}
+            <div className="relative">
+              <select
+                value={filters.sharesAvailableMin ?? ""}
+                onChange={(e) =>
+                  updateFilter("sharesAvailableMin", e.target.value ? parseInt(e.target.value) : null)
+                }
+                className="w-full appearance-none bg-muted/50 border border-border/40 rounded-lg px-3 py-2 pr-8 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Shares %</option>
+                {filterOptions.sharesRanges.slice(1).map((range) => (
+                  <option key={range.value} value={range.value ?? ""}>
+                    {range.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+          </div>
+        </div>
+
+        {/* Main Menubar */}
         <div className="relative bg-background/95 backdrop-blur-2xl border border-border/60 rounded-full shadow-2xl ring-1 ring-border/20 px-6 py-3 inline-flex items-center gap-3 overflow-x-auto transform transition-transform duration-500 ease-out">
           <button
             onClick={() => setActiveCollection(null)}
@@ -117,6 +236,27 @@ export const BottomMenubar = ({
               </button>
             );
           })}
+
+          <div className="flex-shrink-0 w-px h-6 bg-border/60 mx-1" />
+
+          {/* Filters Button */}
+          <button
+            onClick={handleFilterToggle}
+            className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              isFiltersOpen || activeFilterCount > 0
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+            aria-label="Toggle filters"
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            <span className="hidden sm:inline">Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="ml-1 bg-primary-foreground/20 text-primary-foreground px-1.5 py-0.5 rounded-full text-xs">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
 
           <div className="flex-shrink-0 w-px h-6 bg-border/60 mx-1" />
 
