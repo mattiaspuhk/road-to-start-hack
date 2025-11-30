@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 // Minimal middleware for Edge runtime compatibility
 // Auth is handled at the page/component level using Clerk's auth() helper
-export function middleware(_req: NextRequest) {
+export default function middleware(_req: NextRequest) {
   return NextResponse.next();
 }
 
