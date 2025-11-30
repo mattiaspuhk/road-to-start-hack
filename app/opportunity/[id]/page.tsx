@@ -14,59 +14,167 @@ import {
   HowItWorksSection,
   TractionSection,
   TeamSection,
-  InvestmentTimelineSection,
   AskQuestionsSection,
   FloatingInvestCTA,
   CompanyMetricsCard,
   MyPositionCard,
+  OnChainCapTableSection,
 } from "@/components/sections/opportunity";
 
-const companyMetadata: Record<string, { website: string; founded: number; employees: string; headquarters: string }> = {
-  "1": { website: "https://skymed.de", founded: 2022, employees: "25-50", headquarters: "Munich, Germany" },
-  "2": { website: "https://greengrid.energy", founded: 2021, employees: "15-25", headquarters: "Amsterdam, Netherlands" },
-  "3": { website: "https://farmsense.io", founded: 2020, employees: "20-30", headquarters: "Lyon, France" },
-  "4": { website: "https://secureid-labs.eu", founded: 2019, employees: "30-50", headquarters: "Vienna, Austria" },
-  "5": { website: "https://medibot.health", founded: 2021, employees: "15-20", headquarters: "Seville, Spain" },
-  "6": { website: "https://circularpack.com", founded: 2020, employees: "40-60", headquarters: "Rotterdam, Netherlands" },
-  "7": { website: "https://mistral.ai", founded: 2023, employees: "50-100", headquarters: "Paris, France" },
+const companyMetadata: Record<
+  string,
+  { website: string; founded: number; employees: string; headquarters: string }
+> = {
+  "1": {
+    website: "https://skymed.de",
+    founded: 2022,
+    employees: "25-50",
+    headquarters: "Munich, Germany",
+  },
+  "2": {
+    website: "https://greengrid.energy",
+    founded: 2021,
+    employees: "15-25",
+    headquarters: "Amsterdam, Netherlands",
+  },
+  "3": {
+    website: "https://farmsense.io",
+    founded: 2020,
+    employees: "20-30",
+    headquarters: "Lyon, France",
+  },
+  "4": {
+    website: "https://secureid-labs.eu",
+    founded: 2019,
+    employees: "30-50",
+    headquarters: "Vienna, Austria",
+  },
+  "5": {
+    website: "https://medibot.health",
+    founded: 2021,
+    employees: "15-20",
+    headquarters: "Seville, Spain",
+  },
+  "6": {
+    website: "https://circularpack.com",
+    founded: 2020,
+    employees: "40-60",
+    headquarters: "Rotterdam, Netherlands",
+  },
+  "7": {
+    website: "https://mistral.ai",
+    founded: 2023,
+    employees: "50-100",
+    headquarters: "Paris, France",
+  },
 };
 
 const companyImages: Record<string, { src: string; caption: string }[]> = {
   "1": [
-    { src: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&h=675&fit=crop", caption: "Our autonomous drone fleet ready for daily medical deliveries across rural Bavaria" },
-    { src: "https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=1200&h=675&fit=crop", caption: "Precision landing at a partner pharmacy in the countryside" },
-    { src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=675&fit=crop", caption: "Our operations center monitoring real-time delivery routes" },
-    { src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&h=675&fit=crop", caption: "Temperature-controlled medical cargo compartment ensures safe transport" },
+    {
+      src: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&h=675&fit=crop",
+      caption:
+        "Our autonomous drone fleet ready for daily medical deliveries across rural Bavaria",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=1200&h=675&fit=crop",
+      caption: "Precision landing at a partner pharmacy in the countryside",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=675&fit=crop",
+      caption: "Our operations center monitoring real-time delivery routes",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&h=675&fit=crop",
+      caption:
+        "Temperature-controlled medical cargo compartment ensures safe transport",
+    },
   ],
   "2": [
-    { src: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&h=675&fit=crop", caption: "Solar installations managed by our AI platform across the Benelux region" },
-    { src: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&h=675&fit=crop", caption: "Real-time energy optimization dashboard for our SME clients" },
-    { src: "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?w=1200&h=675&fit=crop", caption: "One of 340+ installations achieving carbon neutrality" },
+    {
+      src: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&h=675&fit=crop",
+      caption:
+        "Solar installations managed by our AI platform across the Benelux region",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&h=675&fit=crop",
+      caption: "Real-time energy optimization dashboard for our SME clients",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?w=1200&h=675&fit=crop",
+      caption: "One of 340+ installations achieving carbon neutrality",
+    },
   ],
   "3": [
-    { src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&h=675&fit=crop", caption: "IoT sensors monitoring crop health across 1,200 hectares" },
-    { src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200&h=675&fit=crop", caption: "Precision irrigation based on real-time soil moisture data" },
-    { src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1200&h=675&fit=crop", caption: "Farmers using our mobile app to track field conditions" },
+    {
+      src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&h=675&fit=crop",
+      caption: "IoT sensors monitoring crop health across 1,200 hectares",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200&h=675&fit=crop",
+      caption: "Precision irrigation based on real-time soil moisture data",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1200&h=675&fit=crop",
+      caption: "Farmers using our mobile app to track field conditions",
+    },
   ],
   "4": [
-    { src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=675&fit=crop", caption: "Secure blockchain infrastructure powering identity verification" },
-    { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=675&fit=crop", caption: "Our engineering team building the future of digital identity" },
-    { src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=675&fit=crop", caption: "Decentralized KYC processing thousands of verifications daily" },
+    {
+      src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=675&fit=crop",
+      caption:
+        "Secure blockchain infrastructure powering identity verification",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=675&fit=crop",
+      caption: "Our engineering team building the future of digital identity",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=675&fit=crop",
+      caption: "Decentralized KYC processing thousands of verifications daily",
+    },
   ],
   "5": [
-    { src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=675&fit=crop", caption: "AI-powered diagnostic tools in action at a rural clinic" },
-    { src: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=1200&h=675&fit=crop", caption: "Training session with healthcare workers in Andalusia" },
-    { src: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&h=675&fit=crop", caption: "Our platform achieving 94% diagnostic accuracy" },
+    {
+      src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=675&fit=crop",
+      caption: "AI-powered diagnostic tools in action at a rural clinic",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=1200&h=675&fit=crop",
+      caption: "Training session with healthcare workers in Andalusia",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&h=675&fit=crop",
+      caption: "Our platform achieving 94% diagnostic accuracy",
+    },
   ],
   "6": [
-    { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=675&fit=crop", caption: "Reusable packaging ready for deployment to e-commerce partners" },
-    { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=675&fit=crop", caption: "Our circular economy model in action at Zalando fulfillment" },
-    { src: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=675&fit=crop", caption: "Over 2 million single-use boxes eliminated and counting" },
+    {
+      src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=675&fit=crop",
+      caption: "Reusable packaging ready for deployment to e-commerce partners",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=675&fit=crop",
+      caption: "Our circular economy model in action at Zalando fulfillment",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=675&fit=crop",
+      caption: "Over 2 million single-use boxes eliminated and counting",
+    },
   ],
   "7": [
-    { src: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop", caption: "Our team developing next-generation AI models in Paris" },
-    { src: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=675&fit=crop", caption: "Training infrastructure powering Mistral's open-weight models" },
-    { src: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&h=675&fit=crop", caption: "Collaborative AI research advancing European sovereignty" },
+    {
+      src: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop",
+      caption: "Our team developing next-generation AI models in Paris",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=675&fit=crop",
+      caption: "Training infrastructure powering Mistral's open-weight models",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&h=675&fit=crop",
+      caption: "Collaborative AI research advancing European sovereignty",
+    },
   ],
 };
 
@@ -79,7 +187,6 @@ const companyStories: Record<string, string> = {
   "6": "Sophie Janssen was frustrated by the mountains of cardboard boxes piling up from her online shopping. As a logistics engineer, she knew there had to be a better way. In 2020, she designed a reusable packaging system that could be returned, cleaned, and reused hundreds of times. Today, CircularPack has eliminated over 2 million single-use boxes through partnerships with Zalando and Coolblue, creating a circular economy for e-commerce packaging.",
   "7": "When Arthur Mensch, Timothée Lacroix, and Guillaume Lample left Meta AI and Google DeepMind in 2023, they shared a vision: Europe deserved its own world-class AI lab. Within months, Mistral AI raised €385M—the largest seed round in European history. Their open-weight models—Mistral 7B, Mixtral 8x7B, and the flagship Mistral Large—now rival GPT-4 while costing 5x less to run. With partnerships spanning Microsoft Azure, IBM watsonx, and multiple EU governments, Mistral isn't just building AI models—they're building European AI independence.",
 };
-
 
 function transformToDetailData(
   opp: (typeof mockOpportunities)[0]
@@ -232,10 +339,7 @@ export default function OpportunityDetailPage({
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <HeroSection
-        data={data}
-        rawPriceHistory={data.priceHistory}
-      />
+      <HeroSection data={data} rawPriceHistory={data.priceHistory} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
@@ -262,7 +366,13 @@ export default function OpportunityDetailPage({
               companyName={data.company.name}
             />
 
-            <InvestmentTimelineSection timeline={data.deal.timeline} />
+            {/* On-Chain Cap Table - only shown if linked to blockchain */}
+            {opportunity.startupId !== undefined && (
+              <OnChainCapTableSection
+                startupId={opportunity.startupId}
+                companyName={data.company.name}
+              />
+            )}
 
             <AskQuestionsSection
               companyName={data.company.name}

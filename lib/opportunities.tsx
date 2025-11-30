@@ -25,6 +25,7 @@ export interface Opportunity {
   priceHistory: number[];
   votingPremium: number;
   votingPremiumType: "percentage" | "fixed";
+  startupId?: number; // Link to blockchain StartupRegistry contract
 }
 
 export interface ThematicCollection {
@@ -66,6 +67,7 @@ export const mockOpportunities: Opportunity[] = [
     ],
     votingPremium: 0.15,
     votingPremiumType: "percentage",
+    startupId: 0, // Linked to blockchain StartupRegistry
   },
   {
     id: "2",

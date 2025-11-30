@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Wallet, Vote, GraduationCap } from "lucide-react";
+import { Menu, X, Wallet, Vote, GraduationCap, Rocket } from "lucide-react";
 import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import {
   NavigationMenu,
@@ -68,6 +68,20 @@ export const Navbar = () => {
                       )}
                     >
                       Learn
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/startup/new"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "bg-transparent",
+                        isActive("/startup/new") && "text-accent-foreground"
+                      )}
+                    >
+                      Register Startup
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -190,6 +204,19 @@ export const Navbar = () => {
               >
                 <GraduationCap className="w-4 h-4" />
                 Learn
+              </Link>
+              <Link
+                href="/startup/new"
+                className={cn(
+                  "text-sm transition-colors flex items-center gap-2",
+                  isActive("/startup/new")
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Rocket className="w-4 h-4" />
+                Register Startup
               </Link>
               {isSignedIn && (
                 <div className="flex flex-col gap-2 pl-4 border-l border-border">

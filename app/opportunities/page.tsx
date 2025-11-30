@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/opportunities/hero-section";
@@ -13,10 +14,20 @@ import {
 } from "@/lib/opportunities";
 
 const Opportunities = () => {
+  const searchParams = useSearchParams();
+
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
   const [isListView, setIsListView] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState<OpportunityFilters>(defaultFilters);
+  // Get initial filter values from URL params
+  const sectorParam = searchParams.get("sector");
+  const locationParam = searchParams.get("location");
+
+  const [filters, setFilters] = useState<OpportunityFilters>({
+    ...defaultFilters,
+    sector: sectorParam,
+    location: locationParam,
+  });
 
   const hasActiveFilters = Object.values(filters).some((v) => v !== null);
 

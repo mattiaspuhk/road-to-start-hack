@@ -16,7 +16,44 @@ export default function Index() {
   const [country, setCountry] = useState("all");
 
   const handleExplore = () => {
-    router.push("/opportunities");
+    const params = new URLSearchParams();
+
+    // Map industry filter value to sector name
+    if (industry !== "all") {
+      const sectorMap: Record<string, string> = {
+        healthtech: "HealthTech",
+        fintech: "FinTech",
+        cleantech: "CleanTech",
+        deeptech: "DeepTech",
+        agritech: "AgriTech",
+        edtech: "EdTech",
+        logistics: "Logistics",
+      };
+      if (sectorMap[industry]) {
+        params.set("sector", sectorMap[industry]);
+      }
+    }
+
+    // Map country filter value to location name
+    if (country !== "all") {
+      const locationMap: Record<string, string> = {
+        germany: "Germany",
+        france: "France",
+        netherlands: "Netherlands",
+        sweden: "Sweden",
+        spain: "Spain",
+        italy: "Italy",
+        portugal: "Portugal",
+        austria: "Austria",
+        belgium: "Belgium",
+      };
+      if (locationMap[country]) {
+        params.set("location", locationMap[country]);
+      }
+    }
+
+    const queryString = params.toString();
+    router.push(`/opportunities${queryString ? `?${queryString}` : ""}`);
   };
 
   return (
@@ -36,9 +73,9 @@ export default function Index() {
           <FeaturedStartupsSection onExplore={handleExplore} />
           <ValuePropsSection />
           <CTASection onExplore={handleExplore} />
-          <Footer />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

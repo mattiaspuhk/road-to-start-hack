@@ -17,11 +17,11 @@ export default function LearnPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-4">
+          <h1 className="text-2xl md:text-4xl font-bold leading-tight text-white mb-4">
             How Startup Valuation Works
           </h1>
 
-          <p className="text-lg text-white/70 max-w-3xl">
+          <p className="text-base text-white/70 leading-relaxed max-w-3xl">
             Understanding how startups are valued is essential for founders
             planning a fundraising round and for investors evaluating
             opportunities. Unlike mature companies, early-stage startups rarely

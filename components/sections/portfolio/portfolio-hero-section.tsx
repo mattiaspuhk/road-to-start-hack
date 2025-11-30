@@ -84,7 +84,7 @@ export function PortfolioHeroSection({
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <h1 className="font-serif text-3xl md:text-4xl text-white">
+            <h1 className="text-2xl md:text-4xl font-bold leading-tight text-white">
               My Portfolio
             </h1>
             <Badge
