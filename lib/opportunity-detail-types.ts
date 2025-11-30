@@ -48,6 +48,8 @@ export interface OpportunityDetailData {
     timeline: TimelineStep[];
     runwayMonths: number;
     runwayExtension: number;
+    votingPremium: number;
+    votingPremiumType: "percentage" | "fixed";
   };
   team: {
     members: TeamMember[];

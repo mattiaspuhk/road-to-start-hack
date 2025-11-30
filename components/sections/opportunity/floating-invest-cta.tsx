@@ -22,6 +22,9 @@ interface FloatingInvestCTAProps {
   triggerRef: React.RefObject<HTMLElement | null>;
   hideRef: React.RefObject<HTMLElement | null>;
   companyName?: string;
+  votingPremium: number;
+  votingPremiumType: "percentage" | "fixed";
+  totalShares: number;
 }
 
 export function FloatingInvestCTA({
@@ -35,13 +38,27 @@ export function FloatingInvestCTA({
   maxInvestment,
   triggerRef,
   companyName = "Company",
+  votingPremium,
+  votingPremiumType,
+  totalShares,
 }: FloatingInvestCTAProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [inputValue, setInputValue] = useState(investmentAmount.toString());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [withVotingRights, setWithVotingRights] = useState(true);
+  const [withVotingRights, setWithVotingRights] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
+
+  // Calculate voting rights price
+  const votingPrice =
+    votingPremiumType === "percentage"
+      ? pricePerShare * (1 + votingPremium)
+      : pricePerShare + votingPremium;
+
+  // Calculate shares and ownership based on selected share type
+  const effectivePrice = withVotingRights ? votingPrice : pricePerShare;
+  const effectiveShares = Math.floor(investmentAmount / effectivePrice);
+  const effectiveOwnership = ((effectiveShares / totalShares) * 100).toFixed(4);
 
   useEffect(() => {
     setInputValue(investmentAmount.toString());
@@ -297,6 +314,60 @@ export function FloatingInvestCTA({
             <DialogTitle className="text-xl">Confirm Investment</DialogTitle>
           </DialogHeader>
 
+          <div className="space-y-3">
+            <p className="text-sm font-medium">Share Type</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setWithVotingRights(false)}
+                className={`relative p-4 rounded-xl border-2 transition-all ${
+                  !withVotingRights
+                    ? "border-primary bg-primary/5"
+                    : "border-border hover:border-muted-foreground/50"
+                }`}
+              >
+                {!withVotingRights && (
+                  <div className="absolute top-2 right-2">
+                    <Check className="w-4 h-4 text-primary" />
+                  </div>
+                )}
+                <div className="text-left">
+                  <p className="font-medium">Without Voting Rights</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Economic interest only
+                  </p>
+                  <p className="text-sm font-semibold text-primary mt-2">
+                    {currency}
+                    {pricePerShare.toFixed(2)}/share
+                  </p>
+                </div>
+              </button>
+              <button
+                onClick={() => setWithVotingRights(true)}
+                className={`relative p-4 rounded-xl border-2 transition-all ${
+                  withVotingRights
+                    ? "border-primary bg-primary/5"
+                    : "border-border hover:border-muted-foreground/50"
+                }`}
+              >
+                {withVotingRights && (
+                  <div className="absolute top-2 right-2">
+                    <Check className="w-4 h-4 text-primary" />
+                  </div>
+                )}
+                <div className="text-left">
+                  <p className="font-medium">With Voting Rights</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Participate in company decisions
+                  </p>
+                  <p className="text-sm font-semibold text-primary mt-2">
+                    {currency}
+                    {votingPrice.toFixed(2)}/share
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <div className="space-y-6 py-4">
             <div className="bg-muted/50 rounded-xl p-5 space-y-4">
               <div className="flex justify-between items-center">
@@ -314,68 +385,23 @@ export function FloatingInvestCTA({
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Shares</span>
                 <span className="font-medium font-mono">
-                  {sharesFromInvestment.toLocaleString()}
+                  {effectiveShares.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Price per share</span>
                 <span className="font-medium font-mono">
                   {currency}
-                  {pricePerShare}
+                  {effectivePrice.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Ownership</span>
-                <span className="font-medium font-mono">{ownershipPercentage}%</span>
+                <span className="font-medium font-mono">
+                  {effectiveOwnership}%
+                </span>
               </div>
             </div>
-
-            <div className="space-y-3">
-              <p className="text-sm font-medium">Share Type</p>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => setWithVotingRights(true)}
-                  className={`relative p-4 rounded-xl border-2 transition-all ${
-                    withVotingRights
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-muted-foreground/50"
-                  }`}
-                >
-                  {withVotingRights && (
-                    <div className="absolute top-2 right-2">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                  )}
-                  <div className="text-left">
-                    <p className="font-medium">With Voting Rights</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Participate in company decisions
-                    </p>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setWithVotingRights(false)}
-                  className={`relative p-4 rounded-xl border-2 transition-all ${
-                    !withVotingRights
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-muted-foreground/50"
-                  }`}
-                >
-                  {!withVotingRights && (
-                    <div className="absolute top-2 right-2">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                  )}
-                  <div className="text-left">
-                    <p className="font-medium">Without Voting Rights</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Economic interest only
-                    </p>
-                  </div>
-                </button>
-              </div>
-            </div>
-
             <Button
               onClick={handleConfirmInvestment}
               className="w-full py-6 text-base"

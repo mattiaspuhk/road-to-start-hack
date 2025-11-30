@@ -151,6 +151,8 @@ function transformToDetailData(
       ],
       runwayMonths: opp.runwayMonths,
       runwayExtension: Math.floor(opp.runwayMonths * 3),
+      votingPremium: opp.votingPremium,
+      votingPremiumType: opp.votingPremiumType,
     },
     team: {
       members: [
@@ -311,6 +313,10 @@ export default function OpportunityDetailPage({
         maxInvestment={data.investment.maxInvestment}
         triggerRef={tractionRef}
         hideRef={calculatorRef}
+        companyName={data.company.name}
+        votingPremium={data.deal.votingPremium}
+        votingPremiumType={data.deal.votingPremiumType}
+        totalShares={data.investment.totalShares}
       />
 
       <Footer />

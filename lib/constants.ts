@@ -56,6 +56,20 @@ export const featuredStartups = [
       { label: "Valuation", value: "€6M" },
     ],
   },
+  {
+    name: "FactoryAI",
+    sector: "DeepTech",
+    description:
+      "Industrial automation platform using computer vision and robotics to optimize manufacturing processes across European factories.",
+    founders: "Erik Karlsson (ex-ABB) & Sofia Lindqvist (ex-Spotify)",
+    color: "primary",
+    image:
+      "https://images.unsplash.com/photo-1565514020179-026b92b2ed43?w=800&h=600&fit=crop&q=80",
+    stats: [
+      { label: "Factories", value: "12" },
+      { label: "Valuation", value: "€5M" },
+    ],
+  },
 ];
 
 export const thematicCollections = [

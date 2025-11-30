@@ -66,7 +66,7 @@ export const OpportunitiesCompaniesSection = ({
                   href={`/opportunity/${opp.id}`}
                   className="flex items-center gap-4 p-4"
                 >
-                  <div className="w-14 h-14 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative ring-1 ring-border/50">
+                  <div className="w-14 h-14 rounded-lg bg-muted shrink-0 overflow-hidden relative ring-1 ring-border/50">
                     <Image
                       src={getCompanyImage(opp)}
                       alt={opp.name}
@@ -124,7 +124,7 @@ export const OpportunitiesCompaniesSection = ({
                       />
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all flex-shrink-0" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all shrink-0" />
                 </Link>
               </article>
             );
@@ -146,7 +146,7 @@ export const OpportunitiesCompaniesSection = ({
                 <Link href={`/opportunity/${opp.id}`} className="block p-5">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-start gap-3 flex-1 min-w-0">
-                      <div className="w-12 h-12 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative ring-1 ring-border/50">
+                      <div className="w-12 h-12 rounded-lg bg-muted shrink-0 overflow-hidden relative ring-1 ring-border/50">
                         <Image
                           src={getCompanyImage(opp)}
                           alt={opp.name}
@@ -179,7 +179,7 @@ export const OpportunitiesCompaniesSection = ({
                         </div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
+                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all shrink-0 mt-1" />
                   </div>
 
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">

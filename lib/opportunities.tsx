@@ -20,6 +20,8 @@ export interface Opportunity {
   businessHook?: string;
   sharePrice: number;
   priceHistory: number[];
+  votingPremium: number;
+  votingPremiumType: "percentage" | "fixed";
 }
 
 export interface ThematicCollection {
@@ -56,6 +58,8 @@ export const mockOpportunities: Opportunity[] = [
       11.8, 12.2, 11.9, 12.5, 12.1, 12.4, 12.0, 12.3, 12.6, 12.2, 12.5, 12.3,
       12.1, 12.4, 12.6, 12.3, 12.45, 12.4,
     ],
+    votingPremium: 0.15,
+    votingPremiumType: "percentage",
   },
   {
     id: "2",
@@ -82,6 +86,8 @@ export const mockOpportunities: Opportunity[] = [
       18.3, 18.5, 18.7, 18.4, 18.6, 18.8, 18.5, 18.7, 18.9, 18.6, 18.8, 18.7,
       18.5, 18.7, 18.9, 18.8, 18.75, 18.7,
     ],
+    votingPremium: 0.12,
+    votingPremiumType: "percentage",
   },
   {
     id: "3",
@@ -108,6 +114,8 @@ export const mockOpportunities: Opportunity[] = [
       8.0, 8.3, 8.1, 8.0, 8.2, 8.4, 8.2, 8.1, 8.3, 8.1, 8.2, 8.0, 8.1, 8.2,
       8.15,
     ],
+    votingPremium: 1.5,
+    votingPremiumType: "fixed",
   },
   {
     id: "4",
@@ -134,6 +142,8 @@ export const mockOpportunities: Opportunity[] = [
       14.9, 15.1, 15.3, 15.0, 15.2, 15.4, 15.1, 15.3, 15.5, 15.2, 15.4, 15.3,
       15.1, 15.3, 15.2, 15.4, 15.3, 15.25,
     ],
+    votingPremium: 0.18,
+    votingPremiumType: "percentage",
   },
   {
     id: "5",
@@ -160,6 +170,8 @@ export const mockOpportunities: Opportunity[] = [
       5.5, 5.7, 5.9, 5.6, 5.8, 5.7, 5.9, 5.8, 5.7, 5.9, 5.8, 5.85, 5.8, 5.85,
       5.82,
     ],
+    votingPremium: 0.1,
+    votingPremiumType: "percentage",
   },
   {
     id: "6",
@@ -186,6 +198,8 @@ export const mockOpportunities: Opportunity[] = [
       9.8, 9.6, 9.4, 9.7, 9.5, 9.6, 9.4, 9.6, 9.5, 9.7, 9.6, 9.5, 9.6, 9.55,
       9.6,
     ],
+    votingPremium: 2.0,
+    votingPremiumType: "fixed",
   },
 ];
 

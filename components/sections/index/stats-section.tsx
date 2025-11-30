@@ -23,7 +23,7 @@ export const StatsSection = () => {
                 <div className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-transparent rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative glass-card rounded-2xl p-8 text-center border border-border hover:border-primary/30 transition-all duration-300 group-hover:-translate-y-1">
-                    <div className="text-4xl md:text-5xl font-serif gradient-text mb-2 group-hover:scale-105 transition-transform duration-300">
+                    <div className="text-4xl md:text-5xl font-mono gradient-text mb-2 group-hover:scale-105 transition-transform duration-300">
                       {stat.value}
                     </div>
                     <div className="text-sm text-muted-foreground font-medium">
