@@ -1,6 +1,13 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default clerkMiddleware();
+// Only use Clerk middleware if publishable key is configured
+const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+export default clerkKey
+  ? clerkMiddleware()
+  : (req: NextRequest) => NextResponse.next();
 
 export const config = {
   matcher: [

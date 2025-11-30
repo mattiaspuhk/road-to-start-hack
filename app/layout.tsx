@@ -23,8 +23,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Clerk requires a publishable key. Set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in .env.local
+  // Get your key from https://dashboard.clerk.com/last-active?path=api-keys
+  // For build to pass without a real key, use a valid-format placeholder:
+  const publishableKey =
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
+    "pk_test_00000000000000000000000000000000000000000000000000000000000000000000";
+
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={publishableKey}>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -21,7 +21,7 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
-  const { isSignedIn } = useUser();
+  const { isSignedIn } = useUser() || { isSignedIn: false };
 
   const isActive = (path: string) => pathname === path;
 
