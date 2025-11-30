@@ -45,10 +45,12 @@ export default function StartupDetailPage({
 
     try {
       if (!isMetaMaskInstalled()) {
-        throw new Error("MetaMask is not installed. Please install MetaMask to view startup data.");
+        throw new Error(
+          "MetaMask is not installed. Please install MetaMask to view startup data."
+        );
       }
 
-      const { contract } = getContract();
+      const { contract } = await getContract();
 
       // Fetch startup data
       const startupData = await contract.getStartup(id);
@@ -99,11 +101,16 @@ export default function StartupDetailPage({
   };
 
   const calculateTotalShares = () => {
-    return capTable.reduce((sum, entry) => sum + BigInt(entry.shares), BigInt(0)).toString();
+    return capTable
+      .reduce((sum, entry) => sum + BigInt(entry.shares), BigInt(0))
+      .toString();
   };
 
   const calculateOwnership = (shares: string) => {
-    const total = capTable.reduce((sum, entry) => sum + BigInt(entry.shares), BigInt(0));
+    const total = capTable.reduce(
+      (sum, entry) => sum + BigInt(entry.shares),
+      BigInt(0)
+    );
     if (total === BigInt(0)) return "0.00";
     const sharesBI = BigInt(shares);
     const percent = (sharesBI * BigInt(10000)) / total;
@@ -149,7 +156,9 @@ export default function StartupDetailPage({
                 <Hash className="w-4 h-4" />
                 Startup ID: {id}
               </div>
-              <h1 className="text-4xl font-bold text-foreground">{startup.name}</h1>
+              <h1 className="text-4xl font-bold text-foreground">
+                {startup.name}
+              </h1>
             </div>
 
             {/* Startup Details Card */}
@@ -220,7 +229,8 @@ export default function StartupDetailPage({
                   <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
                   <p className="font-medium mb-2">No cap table entries</p>
                   <p className="text-sm">
-                    The founder can set up the cap table using the smart contract.
+                    The founder can set up the cap table using the smart
+                    contract.
                   </p>
                 </div>
               ) : (
@@ -307,9 +317,11 @@ export default function StartupDetailPage({
             <div className="bg-muted/30 rounded-lg p-4 text-sm text-muted-foreground">
               <p className="font-medium mb-1">Note:</p>
               <p>
-                This data is fetched directly from the Sepolia testnet blockchain.
-                The cap table can be updated by the contract owner using the{" "}
-                <code className="bg-muted px-1 rounded">setCapTable</code> function.
+                This data is fetched directly from the Sepolia testnet
+                blockchain. The cap table can be updated by the contract owner
+                using the{" "}
+                <code className="bg-muted px-1 rounded">setCapTable</code>{" "}
+                function.
               </p>
             </div>
           </div>

@@ -51,7 +51,7 @@ export function OnChainCapTableSection({
         throw new Error("Connect MetaMask to view on-chain data");
       }
 
-      const { contract } = getContract();
+      const { contract } = await getContract();
 
       // Fetch startup data
       const startupData = await contract.getStartup(startupId);

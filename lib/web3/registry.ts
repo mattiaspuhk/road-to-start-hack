@@ -1,5 +1,5 @@
-import { BrowserProvider, Contract } from "ethers";
 import { REGISTRY_ABI } from "../registryAbi";
+import type { BrowserProvider, Contract } from "ethers";
 
 declare global {
   interface Window {
@@ -50,13 +50,14 @@ export function isMetaMaskInstalled(): boolean {
 /**
  * Get contract instance with read-only provider
  */
-export function getContract() {
+export async function getContract() {
   const address = getContractAddress();
 
   if (typeof window === "undefined" || !window.ethereum) {
     throw new Error("MetaMask not found. Please install MetaMask extension.");
   }
 
+  const { BrowserProvider, Contract } = await import("ethers");
   const provider = new BrowserProvider(window.ethereum);
   const contract = new Contract(address, REGISTRY_ABI, provider);
   return { provider, contract };
@@ -72,6 +73,7 @@ export async function getContractWithSigner() {
     throw new Error("MetaMask not found. Please install MetaMask extension.");
   }
 
+  const { BrowserProvider, Contract } = await import("ethers");
   const provider = new BrowserProvider(window.ethereum);
   const signer = await provider.getSigner();
   const contract = new Contract(address, REGISTRY_ABI, signer);
@@ -187,7 +189,7 @@ export async function getAllStartups(): Promise<BlockchainStartup[]> {
   }
 
   try {
-    const { contract } = getContract();
+    const { contract } = await getContract();
     const nextId = await contract.nextStartupId();
     const count = Number(nextId);
 
