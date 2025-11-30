@@ -32,11 +32,11 @@ export const Navbar = () => {
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-serif font-bold text-lg">
-                V
+                EA
               </span>
             </div>
             <span className="font-serif text-xl text-foreground font-medium">
-              Verdant
+              EdgeAngel
             </span>
           </Link>
 
