@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Minimal middleware for Edge runtime compatibility
+// Minimal proxy hook to keep optional global logic in the Node.js runtime
 // Auth is handled at the page/component level using Clerk's auth() helper
-export default function middleware(_req: NextRequest) {
+export function proxy(_request: NextRequest) {
   return NextResponse.next();
 }
 
