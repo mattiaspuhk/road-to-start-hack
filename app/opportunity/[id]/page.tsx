@@ -378,6 +378,18 @@ export default function OpportunityDetailPage({
               companyName={data.company.name}
               question={question}
               onQuestionChange={setQuestion}
+              opportunityContext={{
+                tagline: data.company.tagline,
+                sector: data.company.sector,
+                stage: data.company.stage,
+                valuation: data.deal.valuation,
+                story: companyStory,
+                eli5Points: data.pitch.eli5Points,
+                traction: data.pitch.traction,
+                bullCase: data.analysis.bullCase,
+                bearCase: data.analysis.bearCase,
+                teamMembers: data.team.members,
+              }}
             />
           </div>
 

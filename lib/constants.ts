@@ -64,7 +64,7 @@ export const featuredStartups = [
     founders: "Erik Karlsson (ex-ABB) & Sofia Lindqvist (ex-Spotify)",
     color: "primary",
     image:
-      "https://images.unsplash.com/photo-1565514020179-026b92b2ed43?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop&q=80",
     stats: [
       { label: "Factories", value: "12" },
       { label: "Valuation", value: "€5M" },
