@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -13,7 +13,7 @@ import {
   defaultFilters,
 } from "@/lib/opportunities";
 
-const Opportunities = () => {
+const OpportunitiesContent = () => {
   const searchParams = useSearchParams();
 
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
@@ -43,9 +43,14 @@ const Opportunities = () => {
     if (filters.location && opp.location !== filters.location) return false;
     if (filters.sector && opp.sector !== filters.sector) return false;
     if (filters.vertical && opp.vertical !== filters.vertical) return false;
-    if (filters.foundingYear && opp.foundingYear !== filters.foundingYear) return false;
+    if (filters.foundingYear && opp.foundingYear !== filters.foundingYear)
+      return false;
     if (filters.stage && opp.stage !== filters.stage) return false;
-    if (filters.sharesAvailableMin && opp.sharesAvailablePercent < filters.sharesAvailableMin) return false;
+    if (
+      filters.sharesAvailableMin &&
+      opp.sharesAvailablePercent < filters.sharesAvailableMin
+    )
+      return false;
 
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -99,6 +104,24 @@ const Opportunities = () => {
         setFilters={setFilters}
       />
     </div>
+  );
+};
+
+const Opportunities = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background">
+          <Navbar />
+          <main className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-muted-foreground">Loading...</div>
+          </main>
+          <Footer />
+        </div>
+      }
+    >
+      <OpportunitiesContent />
+    </Suspense>
   );
 };
 
