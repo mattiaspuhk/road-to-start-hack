@@ -9,6 +9,7 @@ import type { OpportunityDetailData } from "@/lib/opportunity-detail-types";
 
 import {
   HeroSection,
+  ImageCarousel,
   StorySection,
   HowItWorksSection,
   TractionSection,
@@ -19,6 +20,49 @@ import {
   CompanyMetricsCard,
   MyPositionCard,
 } from "@/components/sections/opportunity";
+
+const companyMetadata: Record<string, { website: string; founded: number; employees: string; headquarters: string }> = {
+  "1": { website: "https://skymed.de", founded: 2022, employees: "25-50", headquarters: "Munich, Germany" },
+  "2": { website: "https://greengrid.energy", founded: 2021, employees: "15-25", headquarters: "Amsterdam, Netherlands" },
+  "3": { website: "https://farmsense.io", founded: 2020, employees: "20-30", headquarters: "Lyon, France" },
+  "4": { website: "https://secureid-labs.eu", founded: 2019, employees: "30-50", headquarters: "Vienna, Austria" },
+  "5": { website: "https://medibot.health", founded: 2021, employees: "15-20", headquarters: "Seville, Spain" },
+  "6": { website: "https://circularpack.com", founded: 2020, employees: "40-60", headquarters: "Rotterdam, Netherlands" },
+};
+
+const companyImages: Record<string, { src: string; caption: string }[]> = {
+  "1": [
+    { src: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&h=675&fit=crop", caption: "Our autonomous drone fleet ready for daily medical deliveries across rural Bavaria" },
+    { src: "https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=1200&h=675&fit=crop", caption: "Precision landing at a partner pharmacy in the countryside" },
+    { src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=675&fit=crop", caption: "Our operations center monitoring real-time delivery routes" },
+    { src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&h=675&fit=crop", caption: "Temperature-controlled medical cargo compartment ensures safe transport" },
+  ],
+  "2": [
+    { src: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&h=675&fit=crop", caption: "Solar installations managed by our AI platform across the Benelux region" },
+    { src: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&h=675&fit=crop", caption: "Real-time energy optimization dashboard for our SME clients" },
+    { src: "https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?w=1200&h=675&fit=crop", caption: "One of 340+ installations achieving carbon neutrality" },
+  ],
+  "3": [
+    { src: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&h=675&fit=crop", caption: "IoT sensors monitoring crop health across 1,200 hectares" },
+    { src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200&h=675&fit=crop", caption: "Precision irrigation based on real-time soil moisture data" },
+    { src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1200&h=675&fit=crop", caption: "Farmers using our mobile app to track field conditions" },
+  ],
+  "4": [
+    { src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=675&fit=crop", caption: "Secure blockchain infrastructure powering identity verification" },
+    { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=675&fit=crop", caption: "Our engineering team building the future of digital identity" },
+    { src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=675&fit=crop", caption: "Decentralized KYC processing thousands of verifications daily" },
+  ],
+  "5": [
+    { src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=675&fit=crop", caption: "AI-powered diagnostic tools in action at a rural clinic" },
+    { src: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=1200&h=675&fit=crop", caption: "Training session with healthcare workers in Andalusia" },
+    { src: "https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&h=675&fit=crop", caption: "Our platform achieving 94% diagnostic accuracy" },
+  ],
+  "6": [
+    { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=675&fit=crop", caption: "Reusable packaging ready for deployment to e-commerce partners" },
+    { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=675&fit=crop", caption: "Our circular economy model in action at Zalando fulfillment" },
+    { src: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=675&fit=crop", caption: "Over 2 million single-use boxes eliminated and counting" },
+  ],
+};
 
 const companyStories: Record<string, string> = {
   "1": "In the quiet villages of rural Bavaria, elderly patients often wait days for essential medications. Dr. Maria Hoffmann witnessed this firsthand during her years at DHL—watching delivery vans struggle on narrow roads while patients went without. In 2022, she partnered with autonomous systems expert Thomas Weber to build SkyMed: a network of medical drones that bypass traffic entirely. Today, their fleet serves 127 pharmacies across Germany, delivering prescriptions in under 15 minutes. The goal isn't just faster delivery—it's ensuring no patient in rural Europe goes without the medicine they need.",
@@ -53,6 +97,13 @@ function transformToDetailData(
       euDomiciled: opp.euDomiciled,
       audited: opp.audited,
       leadInvestor: opp.leadInvestor || "Index Ventures",
+      images: companyImages[opp.id] || [],
+      website: companyMetadata[opp.id]?.website,
+      founded: companyMetadata[opp.id]?.founded,
+      employees: companyMetadata[opp.id]?.employees,
+      headquarters: companyMetadata[opp.id]?.headquarters,
+      sector: opp.sector,
+      stage: opp.stage,
     },
     pitch: {
       videoThumbnail: "/placeholder.svg",
@@ -199,6 +250,13 @@ export default function OpportunityDetailPage({
           {/* Main Content Column */}
           <div>
             <StorySection story={companyStory} />
+
+            {data.company.images && data.company.images.length > 0 && (
+              <ImageCarousel
+                images={data.company.images}
+                companyName={data.company.name}
+              />
+            )}
 
             <HowItWorksSection points={data.pitch.eli5Points} />
 

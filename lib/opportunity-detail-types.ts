@@ -23,6 +23,13 @@ export interface OpportunityDetailData {
     euDomiciled: boolean;
     audited: boolean;
     leadInvestor: string;
+    images?: { src: string; caption: string }[];
+    website?: string;
+    founded?: number;
+    employees?: string;
+    headquarters?: string;
+    sector?: string;
+    stage?: string;
   };
   pitch: {
     videoThumbnail: string;

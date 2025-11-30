@@ -8,6 +8,11 @@ import {
   CheckCircle,
   Building,
   MapPin,
+  Globe,
+  Calendar,
+  Users,
+  ExternalLink,
+  Briefcase,
 } from "lucide-react";
 import {
   Area,
@@ -62,29 +67,70 @@ export function HeroSection({ data, priceHistory, priceChange }: HeroSectionProp
                   Audited
                 </Badge>
               )}
-              <Badge
-                variant="outline"
-                className="text-xs gap-1.5 border-white/20 text-white/80 bg-white/5"
-              >
-                <Building className="w-3 h-3" />
-                Seed Stage
-              </Badge>
-              <Badge
-                variant="outline"
-                className="text-xs gap-1.5 border-white/20 text-white/80 bg-white/5"
-              >
-                <MapPin className="w-3 h-3" />
-                Germany
-              </Badge>
+              {data.company.stage && (
+                <Badge
+                  variant="outline"
+                  className="text-xs gap-1.5 border-white/20 text-white/80 bg-white/5"
+                >
+                  <Building className="w-3 h-3" />
+                  {data.company.stage}
+                </Badge>
+              )}
+              {data.company.sector && (
+                <Badge
+                  variant="outline"
+                  className="text-xs gap-1.5 border-white/20 text-white/80 bg-white/5"
+                >
+                  <Briefcase className="w-3 h-3" />
+                  {data.company.sector}
+                </Badge>
+              )}
+              {data.company.headquarters && (
+                <Badge
+                  variant="outline"
+                  className="text-xs gap-1.5 border-white/20 text-white/80 bg-white/5"
+                >
+                  <MapPin className="w-3 h-3" />
+                  {data.company.headquarters}
+                </Badge>
+              )}
             </div>
 
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4">
               {data.company.name}
             </h1>
 
-            <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-xl mb-6">
               {data.company.tagline}
             </p>
+
+            {/* Company Metadata */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60">
+              {data.company.website && (
+                <a
+                  href={data.company.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 hover:text-white transition-colors"
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>{data.company.website.replace(/^https?:\/\//, '')}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+              {data.company.founded && (
+                <div className="inline-flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4" />
+                  <span>Founded {data.company.founded}</span>
+                </div>
+              )}
+              {data.company.employees && (
+                <div className="inline-flex items-center gap-1.5">
+                  <Users className="w-4 h-4" />
+                  <span>{data.company.employees} employees</span>
+                </div>
+              )}
+            </div>
           </div>
 
           <SharePriceCard
@@ -168,12 +214,12 @@ function SharePriceCard({
                 <stop
                   offset="0%"
                   stopColor="hsl(var(--primary))"
-                  stopOpacity={0.4}
+                  stopOpacity={0.8}
                 />
                 <stop
                   offset="100%"
                   stopColor="hsl(var(--primary))"
-                  stopOpacity={0}
+                  stopOpacity={0.15}
                 />
               </linearGradient>
             </defs>
@@ -212,7 +258,7 @@ function SharePriceCard({
               type="monotone"
               dataKey="price"
               stroke="hsl(var(--primary))"
-              strokeWidth={2}
+              strokeWidth={3}
               fill="url(#priceGradient)"
             />
           </AreaChart>

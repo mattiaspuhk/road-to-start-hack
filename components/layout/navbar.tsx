@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sparkles, Info } from "lucide-react";
+import { Menu, X, Sparkles, Info, Wallet } from "lucide-react";
 import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import {
   NavigationMenu,
@@ -135,7 +135,15 @@ export const Navbar = () => {
           {/* Right side */}
           <div className="flex items-center gap-4">
             {isSignedIn ? (
-              <UserButton afterSignOutUrl="/" />
+              <>
+                <Link href="/portfolio">
+                  <Button variant="ghost" size="sm" className="hidden md:flex gap-2">
+                    <Wallet className="w-4 h-4" />
+                    Portfolio
+                  </Button>
+                </Link>
+                <UserButton afterSignOutUrl="/" />
+              </>
             ) : (
               <>
                 <SignInButton mode="modal">
@@ -237,11 +245,26 @@ export const Navbar = () => {
                   For Talent
                 </a>
               </div>
-              <div className="flex gap-2 pt-2">
+              <div className="flex flex-col gap-2 pt-2">
                 {isSignedIn ? (
-                  <div className="flex-1 flex justify-center">
-                    <UserButton afterSignOutUrl="/" />
-                  </div>
+                  <>
+                    <Link
+                      href="/portfolio"
+                      className={cn(
+                        "text-sm transition-colors flex items-center gap-2",
+                        isActive("/portfolio")
+                          ? "text-foreground font-medium"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Wallet className="w-4 h-4" />
+                      My Portfolio
+                    </Link>
+                    <div className="flex-1 flex justify-center pt-2">
+                      <UserButton afterSignOutUrl="/" />
+                    </div>
+                  </>
                 ) : (
                   <>
                     <SignInButton mode="modal">

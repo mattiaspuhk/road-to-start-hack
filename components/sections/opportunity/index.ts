@@ -1,4 +1,5 @@
 export { HeroSection } from "./hero-section";
+export { ImageCarousel } from "./image-carousel";
 export { StorySection } from "./story-section";
 export { HowItWorksSection } from "./how-it-works-section";
 export { TractionSection } from "./traction-section";
