@@ -28,7 +28,6 @@ export const HeroSection = ({
 }: HeroSectionProps) => {
   return (
     <div className="pt-20 pb-16 md:pt-32 md:pb-24 relative">
-      {/* Subtle grid background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
@@ -63,12 +62,10 @@ export const HeroSection = ({
         </ScrollReveal>
       </div>
 
-      {/* Simplified Inline Search-Style Selector */}
       <ScrollReveal animation="scale" delay={300}>
         <div className="max-w-3xl mx-auto px-4">
           <div className="glass-card rounded-2xl md:rounded-full p-3 md:p-2 shadow-xl shadow-primary/5 border border-border/50">
             <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-2">
-              {/* Industry Select */}
               <div className="flex-1 w-full md:w-auto">
                 <Select value={industry} onValueChange={setIndustry}>
                   <SelectTrigger className="h-14 md:h-14 border-0 bg-transparent shadow-none text-base font-medium pl-4 md:pl-5 pr-4 focus:ring-0 focus:ring-offset-0 min-h-[44px]">
@@ -92,10 +89,8 @@ export const HeroSection = ({
                 </Select>
               </div>
 
-              {/* Divider */}
               <div className="hidden md:block w-px h-8 bg-border" />
 
-              {/* Country Select */}
               <div className="flex-1 w-full md:w-auto">
                 <Select value={country} onValueChange={setCountry}>
                   <SelectTrigger className="h-14 md:h-14 border-0 bg-transparent shadow-none text-base font-medium pl-4 md:pl-5 pr-4 focus:ring-0 focus:ring-offset-0 min-h-[44px]">
@@ -119,7 +114,6 @@ export const HeroSection = ({
                 </Select>
               </div>
 
-              {/* CTA Button */}
               <Button
                 onClick={onExplore}
                 size="lg"

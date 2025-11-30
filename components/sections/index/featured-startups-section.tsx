@@ -47,7 +47,6 @@ export const FeaturedStartupsSection = ({
           </Button>
         </div>
 
-        {/* Editorial Magazine Layout */}
         <div className="space-y-20">
           {featuredStartups.map((startup, index) => (
             <ScrollReveal
@@ -62,7 +61,6 @@ export const FeaturedStartupsSection = ({
                 onClick={() => handleStartupClick("1")}
                 style={{ maxWidth: "900px" }}
               >
-                {/* Large number background */}
                 <div
                   className={`absolute -top-8 ${
                     index % 2 === 0
@@ -78,7 +76,6 @@ export const FeaturedStartupsSection = ({
                     index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                   } items-stretch gap-0 md:gap-0`}
                 >
-                  {/* Image with frame effect */}
                   <div className="relative shrink-0 w-full md:w-[500px]">
                     <div
                       className={`absolute inset-0 ${
@@ -106,7 +103,6 @@ export const FeaturedStartupsSection = ({
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                           sizes="(max-width: 768px) 100vw, 500px"
                         />
-                        {/* Gradient overlay */}
                         <div
                           className={`absolute inset-0 bg-gradient-to-t ${
                             startup.color === "primary"
@@ -115,7 +111,6 @@ export const FeaturedStartupsSection = ({
                           } opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                         />
                       </div>
-                      {/* Sector overlay */}
                       <div
                         className={`absolute top-4 ${
                           index % 2 === 0 ? "left-4" : "right-4"
@@ -130,7 +125,6 @@ export const FeaturedStartupsSection = ({
                     </div>
                   </div>
 
-                  {/* Content Card - same height as image */}
                   <div
                     className={`flex-1 bg-card/50 backdrop-blur-sm rounded-xl p-6 md:p-8 border border-border/50 shadow-sm group-hover:shadow-md transition-all duration-300 flex flex-col justify-center md:h-full ${
                       index % 2 === 0
@@ -146,7 +140,6 @@ export const FeaturedStartupsSection = ({
                       {startup.description}
                     </p>
 
-                    {/* Stats inline */}
                     <div
                       className={`flex items-center gap-8 mb-6 ${
                         index % 2 === 1 ? "md:justify-end" : ""
@@ -171,7 +164,6 @@ export const FeaturedStartupsSection = ({
                       ))}
                     </div>
 
-                    {/* Founders */}
                     <div
                       className={`flex items-center gap-3 text-sm mb-6 ${
                         index % 2 === 1 ? "md:justify-end" : ""
@@ -193,7 +185,6 @@ export const FeaturedStartupsSection = ({
                       </span>
                     </div>
 
-                    {/* CTA */}
                     <div
                       className={`${index % 2 === 1 ? "md:text-right" : ""}`}
                     >

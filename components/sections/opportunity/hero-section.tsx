@@ -104,7 +104,6 @@ export function HeroSection({ data, priceHistory, priceChange }: HeroSectionProp
               {data.company.tagline}
             </p>
 
-            {/* Company Metadata */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60">
               {data.company.website && (
                 <a

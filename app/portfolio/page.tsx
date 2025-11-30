@@ -11,7 +11,6 @@ import {
   AllocationChart,
 } from "@/components/sections/portfolio";
 
-// Mock portfolio data - in real app this would come from a database/API
 const mockPortfolioHoldings = [
   {
     opportunityId: "1",
@@ -33,7 +32,6 @@ const mockPortfolioHoldings = [
   },
 ];
 
-// Mock news feed data
 const mockNewsFeed = [
   {
     id: "1",
@@ -83,7 +81,6 @@ const mockNewsFeed = [
 ];
 
 export default function PortfolioPage() {
-  // Transform holdings with opportunity data
   const holdingsWithData = mockPortfolioHoldings.map((holding) => {
     const opportunity = mockOpportunities.find(
       (opp) => opp.id === holding.opportunityId
@@ -105,7 +102,6 @@ export default function PortfolioPage() {
     };
   }).filter(Boolean);
 
-  // Calculate portfolio totals
   const totalValue = holdingsWithData.reduce(
     (sum, h) => sum + (h?.currentValue || 0),
     0
@@ -117,7 +113,6 @@ export default function PortfolioPage() {
   const totalGain = totalValue - totalCostBasis;
   const totalGainPercent = ((totalGain / totalCostBasis) * 100).toFixed(2);
 
-  // Calculate allocation by sector
   const allocationBySector = holdingsWithData.reduce((acc, h) => {
     if (!h) return acc;
     const sector = h.opportunity.sector;
@@ -134,25 +129,23 @@ export default function PortfolioPage() {
     percentage: ((value / totalValue) * 100).toFixed(1),
   }));
 
-  // Filter news for owned companies only
   const ownedCompanyIds = mockPortfolioHoldings.map((h) => h.opportunityId);
   const relevantNews = mockNewsFeed.filter((news) =>
     ownedCompanyIds.includes(news.companyId)
   );
 
-  // Generate mock portfolio history (simulating value changes over time)
   const portfolioHistory = (() => {
     const months = ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
     const baseValue = totalCostBasis;
-    return months.map((date, i) => ({
+    const growthFactors = [0.97, 0.99, 1.01, 1.03, 1.05, 1.0];
+    const history = months.map((date, i) => ({
       date,
-      value: baseValue * (0.95 + Math.random() * 0.1 + i * 0.02),
+      value: baseValue * growthFactors[i],
     }));
+    history[history.length - 1] = { date: "Nov", value: totalValue };
+    return history;
   })();
-  // Make sure last value is actual totalValue
-  portfolioHistory[portfolioHistory.length - 1] = { date: "Nov", value: totalValue };
 
-  // Find best and worst performers
   const validHoldings = holdingsWithData.filter(Boolean) as NonNullable<typeof holdingsWithData[0]>[];
   const sortedByPerformance = [...validHoldings].sort(
     (a, b) => parseFloat(b.gainPercent) - parseFloat(a.gainPercent)
@@ -185,7 +178,6 @@ export default function PortfolioPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
-          {/* Main Content Column */}
           <div className="space-y-12">
             <HoldingsSection holdings={holdingsWithData} />
             <CompanyUpdatesSection
@@ -199,7 +191,6 @@ export default function PortfolioPage() {
             />
           </div>
 
-          {/* Sidebar Column */}
           <div className="hidden lg:block">
             <div className="sticky top-24 space-y-6">
               <PortfolioPerformanceCard

@@ -69,7 +69,6 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
     setExpandedCompany(expandedCompany === companyId ? null : companyId);
   };
 
-  // Group news by company
   const newsByCompany = news.reduce((acc, item) => {
     if (!acc[item.companyId]) {
       acc[item.companyId] = [];
@@ -98,7 +97,6 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
               key={holding.opportunityId}
               className="bg-card border rounded-lg overflow-hidden"
             >
-              {/* Company Header */}
               <button
                 onClick={() => hasNews && toggleCompany(holding.opportunityId)}
                 className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${
@@ -145,7 +143,6 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
                 )}
               </button>
 
-              {/* Expanded News List */}
               {isExpanded && hasNews && (
                 <div className="border-t divide-y">
                   {companyNews.map((item) => {
@@ -182,7 +179,6 @@ export function CompanyUpdatesSection({ holdings, news }: CompanyUpdatesSectionP
                     );
                   })}
 
-                  {/* View Company Link */}
                   <Link
                     href={`/opportunity/${holding.opportunityId}`}
                     className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm text-primary hover:bg-muted/30 transition-colors"

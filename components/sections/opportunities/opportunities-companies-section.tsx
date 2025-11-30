@@ -7,12 +7,12 @@ import { collections } from "@/lib/opportunities";
 
 const getCompanyImage = (opp: Opportunity) => {
   const imageMap: Record<string, string> = {
-    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center", // SkyMed - drone delivery
-    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center", // GreenGrid - solar panels
-    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center", // FarmSense - agriculture sensors
-    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center", // SecureID - security/identity
-    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center", // MediBot - medical/healthcare
-    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center", // CircularPack - packaging/logistics
+    "1": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=200&fit=crop&crop=center",
+    "2": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&h=200&fit=crop&crop=center",
+    "3": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&h=200&fit=crop&crop=center",
+    "4": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=200&fit=crop&crop=center",
+    "5": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop&crop=center",
+    "6": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=200&h=200&fit=crop&crop=center",
   };
   return (
     imageMap[opp.id] ||
@@ -144,7 +144,6 @@ export const OpportunitiesCompaniesSection = ({
                 className="group bg-card hover:bg-muted/20 border border-border rounded-lg transition-all duration-300 hover:shadow-md hover:border-primary/20 overflow-hidden"
               >
                 <Link href={`/opportunity/${opp.id}`} className="block p-5">
-                  {/* Header Row */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-start gap-3 flex-1 min-w-0">
                       <div className="w-12 h-12 rounded-lg bg-muted flex-shrink-0 overflow-hidden relative ring-1 ring-border/50">
@@ -183,12 +182,10 @@ export const OpportunitiesCompaniesSection = ({
                     <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
                   </div>
 
-                  {/* Description */}
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
                     {opp.businessHook || opp.tagline}
                   </p>
 
-                  {/* Price and Graph Row */}
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
                       <div className="flex items-baseline gap-2 mb-2">

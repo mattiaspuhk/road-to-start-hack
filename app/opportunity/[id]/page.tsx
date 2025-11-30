@@ -211,7 +211,6 @@ export default function OpportunityDetailPage({
     data.investment.minInvestment
   );
 
-  // Refs for FloatingInvestCTA visibility
   const tractionRef = useRef<HTMLDivElement>(null);
   const calculatorRef = useRef<HTMLDivElement>(null);
 

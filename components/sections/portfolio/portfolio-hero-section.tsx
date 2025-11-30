@@ -14,7 +14,6 @@ import {
   AreaChart,
   ResponsiveContainer,
   XAxis,
-  YAxis,
   Tooltip,
   Cell,
   Pie,
@@ -103,7 +102,6 @@ export function PortfolioHeroSection({
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Portfolio Value with Chart */}
           <div className="sm:col-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
             <div className="flex justify-between items-start mb-3">
               <div>
@@ -182,7 +180,6 @@ export function PortfolioHeroSection({
             </div>
           </div>
 
-          {/* Sector Allocation with Pie Chart */}
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
             <p className="text-xs text-white/50 uppercase tracking-wider mb-3">
               Allocation
@@ -224,7 +221,6 @@ export function PortfolioHeroSection({
             </div>
           </div>
 
-          {/* Performance Summary */}
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
             <p className="text-xs text-white/50 uppercase tracking-wider mb-3">
               Performance

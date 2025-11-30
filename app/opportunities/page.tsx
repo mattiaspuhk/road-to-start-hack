@@ -13,7 +13,6 @@ const Opportunities = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredOpportunities = mockOpportunities.filter((opp) => {
-    // Filter by collection
     if (activeCollection) {
       const collection = collections.find((c) => c.id === activeCollection);
       if (!collection?.sectors.includes(opp.sector)) {
@@ -21,7 +20,6 @@ const Opportunities = () => {
       }
     }
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       return (

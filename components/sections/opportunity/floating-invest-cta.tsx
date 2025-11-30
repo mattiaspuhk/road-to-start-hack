@@ -43,12 +43,10 @@ export function FloatingInvestCTA({
   const [withVotingRights, setWithVotingRights] = useState(true);
   const barRef = useRef<HTMLDivElement>(null);
 
-  // Sync input value when investmentAmount changes externally
   useEffect(() => {
     setInputValue(investmentAmount.toString());
   }, [investmentAmount]);
 
-  // Handle visibility based on scroll position - show after scrolling past trigger
   useEffect(() => {
     const triggerEl = triggerRef.current;
 
@@ -58,10 +56,8 @@ export function FloatingInvestCTA({
       const triggerRect = triggerEl.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      // Show after scrolling past trigger element (TractionSection)
       const pastTrigger = triggerRect.bottom < viewportHeight * 0.5;
 
-      // Once visible, stay visible
       if (pastTrigger && !isVisible) {
         setIsVisible(true);
       }
@@ -104,7 +100,6 @@ export function FloatingInvestCTA({
   };
 
   const handleConfirmInvestment = () => {
-    // Handle the actual investment submission here
     console.log("Investment confirmed:", {
       amount: investmentAmount,
       shares: sharesFromInvestment,
@@ -131,14 +126,12 @@ export function FloatingInvestCTA({
             onMouseLeave={() => setIsExpanded(false)}
             className="relative bg-foreground/95 backdrop-blur-2xl border border-border/60 rounded-2xl shadow-2xl ring-1 ring-white/10 overflow-hidden"
           >
-            {/* Container with smooth width/height transition */}
             <div
               className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                 isExpanded ? "px-6 py-4" : "px-5 py-3"
               }`}
             >
               <div className="flex items-center gap-5">
-                {/* Icon - always visible */}
                 <div
                   className={`flex-shrink-0 rounded-full bg-primary flex items-center justify-center transition-all duration-500 ease-out ${
                     isExpanded ? "w-12 h-12" : "w-10 h-10"
@@ -151,7 +144,6 @@ export function FloatingInvestCTA({
                   />
                 </div>
 
-                {/* Collapsed Content */}
                 <div
                   className={`flex items-center gap-5 transition-all duration-500 ease-out ${
                     isExpanded
@@ -190,7 +182,6 @@ export function FloatingInvestCTA({
                   </div>
                 </div>
 
-                {/* Expanded Content */}
                 <div
                   className={`flex items-center gap-5 transition-all duration-500 ease-out ${
                     isExpanded
@@ -198,7 +189,6 @@ export function FloatingInvestCTA({
                       : "opacity-0 w-0 overflow-hidden"
                   }`}
                 >
-                  {/* Investment Input */}
                   <div className={isExpanded ? "" : "hidden"}>
                     <p className="text-xs text-background/60 mb-1">
                       Investment Amount
@@ -242,7 +232,6 @@ export function FloatingInvestCTA({
                     }`}
                   />
 
-                  {/* Shares */}
                   <div
                     className={`text-center min-w-[90px] ${
                       isExpanded ? "" : "hidden"
@@ -261,7 +250,6 @@ export function FloatingInvestCTA({
                     }`}
                   />
 
-                  {/* Ownership */}
                   <div
                     className={`text-center min-w-[90px] ${
                       isExpanded ? "" : "hidden"
@@ -283,7 +271,6 @@ export function FloatingInvestCTA({
                     }`}
                   />
 
-                  {/* Commit Button */}
                   <Button
                     size="lg"
                     onClick={handleCommit}
@@ -304,7 +291,6 @@ export function FloatingInvestCTA({
         </div>
       </div>
 
-      {/* Investment Confirmation Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -312,7 +298,6 @@ export function FloatingInvestCTA({
           </DialogHeader>
 
           <div className="space-y-6 py-4">
-            {/* Transaction Overview */}
             <div className="bg-muted/50 rounded-xl p-5 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Company</span>
@@ -345,7 +330,6 @@ export function FloatingInvestCTA({
               </div>
             </div>
 
-            {/* Share Type Selection */}
             <div className="space-y-3">
               <p className="text-sm font-medium">Share Type</p>
               <div className="grid grid-cols-2 gap-3">
@@ -392,7 +376,6 @@ export function FloatingInvestCTA({
               </div>
             </div>
 
-            {/* Confirm Button */}
             <Button
               onClick={handleConfirmInvestment}
               className="w-full py-6 text-base"

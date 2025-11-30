@@ -67,7 +67,6 @@ export function ImageCarousel({ images, companyName }: ImageCarouselProps) {
                     className="object-cover"
                     priority={index === 0}
                   />
-                  {/* Caption overlay on hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover/slide:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                       <p className="text-white text-sm md:text-base font-medium">
@@ -88,7 +87,6 @@ export function ImageCarousel({ images, companyName }: ImageCarouselProps) {
           )}
         </Carousel>
 
-        {/* Dot Indicators */}
         {images.length > 1 && (
           <div className="flex justify-center gap-2 mt-4">
             {images.map((_, index) => (
@@ -108,7 +106,6 @@ export function ImageCarousel({ images, companyName }: ImageCarouselProps) {
           </div>
         )}
 
-        {/* Image Counter */}
         <div className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm">
           <span className="text-sm text-white font-medium">
             {current + 1} / {count}

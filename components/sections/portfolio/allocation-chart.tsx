@@ -34,10 +34,10 @@ export function AllocationChart({ allocations }: AllocationChartProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Visual bar chart */}
         <div className="h-4 rounded-full overflow-hidden flex bg-muted">
-          {sortedAllocations.map((allocation, index) => {
-            const color = sectorColors[allocation.sector] || sectorColors.Default;
+          {sortedAllocations.map((allocation) => {
+            const color =
+              sectorColors[allocation.sector] || sectorColors.Default;
             return (
               <div
                 key={allocation.sector}
@@ -49,22 +49,31 @@ export function AllocationChart({ allocations }: AllocationChartProps) {
           })}
         </div>
 
-        {/* Legend */}
         <div className="space-y-3">
           {sortedAllocations.map((allocation) => {
-            const color = sectorColors[allocation.sector] || sectorColors.Default;
+            const color =
+              sectorColors[allocation.sector] || sectorColors.Default;
             return (
-              <div key={allocation.sector} className="flex items-center justify-between">
+              <div
+                key={allocation.sector}
+                className="flex items-center justify-between"
+              >
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${color}`} />
-                  <span className="text-sm text-foreground">{allocation.sector}</span>
+                  <span className="text-sm text-foreground">
+                    {allocation.sector}
+                  </span>
                 </div>
                 <div className="text-right">
                   <span className="text-sm font-mono font-medium">
                     {allocation.percentage}%
                   </span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    €{allocation.value.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                    €
+                    {allocation.value.toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
                   </span>
                 </div>
               </div>

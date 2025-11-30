@@ -21,7 +21,6 @@ export const ValuePropsSection = () => {
         </ScrollReveal>
 
         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {/* Card 1 */}
           <ScrollReveal delay={0} animation="fade-up">
             <div className="group relative h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -54,7 +53,6 @@ export const ValuePropsSection = () => {
             </div>
           </ScrollReveal>
 
-          {/* Card 2 */}
           <ScrollReveal delay={150} animation="fade-up">
             <div className="group relative h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -87,7 +85,6 @@ export const ValuePropsSection = () => {
             </div>
           </ScrollReveal>
 
-          {/* Card 3 */}
           <ScrollReveal delay={300} animation="fade-up">
             <div className="group relative h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-success/20 to-success/5 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500" />

@@ -26,7 +26,6 @@ export const BottomMenubar = ({
   const lastScrollYRef = useRef(0);
 
   useEffect(() => {
-    // Check initial scroll position
     const checkInitialScroll = () => {
       const scrollY = window.scrollY;
       lastScrollYRef.current = scrollY;
@@ -44,7 +43,6 @@ export const BottomMenubar = ({
       lastScrollYRef.current = scrollY;
 
       if (scrollY > 200) {
-        // Once scrolled past threshold, always show and mark as visible
         hasBeenVisibleRef.current = true;
         setIsVisible(true);
       } else if (
@@ -52,11 +50,9 @@ export const BottomMenubar = ({
         hasBeenVisibleRef.current &&
         scrollDelta < -10
       ) {
-        // Only hide if actively scrolling up to the very top (with threshold to avoid accidental hiding)
         setIsVisible(false);
         hasBeenVisibleRef.current = false;
       } else if (hasBeenVisibleRef.current) {
-        // If we've been visible, always keep showing regardless of scroll position changes
         setIsVisible(true);
       }
     };
@@ -65,17 +61,13 @@ export const BottomMenubar = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure menubar stays visible when content changes (search/filter)
-  // Check visibility state when filters change
   useEffect(() => {
     if (hasBeenVisibleRef.current) {
-      // Force visibility check after content changes
       const checkVisibility = () => {
         if (hasBeenVisibleRef.current) {
           setIsVisible(true);
         }
       };
-      // Use requestAnimationFrame to check after DOM updates
       requestAnimationFrame(checkVisibility);
     }
   }, [activeCollection, searchQuery]);
@@ -97,7 +89,6 @@ export const BottomMenubar = ({
     >
       <div className="flex justify-center px-4 pb-2 pointer-events-auto">
         <div className="relative bg-background/95 backdrop-blur-2xl border border-border/60 rounded-full shadow-2xl ring-1 ring-border/20 px-6 py-3 inline-flex items-center gap-3 overflow-x-auto transform transition-transform duration-500 ease-out">
-          {/* All button */}
           <button
             onClick={() => setActiveCollection(null)}
             className={`flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all ${
@@ -109,7 +100,6 @@ export const BottomMenubar = ({
             All
           </button>
 
-          {/* Category filters */}
           {collections.map((collection) => {
             const isActive = activeCollection === collection.id;
             return (
@@ -128,10 +118,8 @@ export const BottomMenubar = ({
             );
           })}
 
-          {/* Separator */}
           <div className="flex-shrink-0 w-px h-6 bg-border/60 mx-1" />
 
-          {/* Search */}
           {isSearchOpen ? (
             <div className="flex items-center gap-2 min-w-[200px]">
               <Search className="w-4 h-4 text-muted-foreground flex-shrink-0" />
@@ -161,7 +149,6 @@ export const BottomMenubar = ({
             </button>
           )}
 
-          {/* List View Toggle */}
           <button
             onClick={onListViewToggle}
             className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
