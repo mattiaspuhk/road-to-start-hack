@@ -28,6 +28,7 @@ const companyMetadata: Record<string, { website: string; founded: number; employ
   "4": { website: "https://secureid-labs.eu", founded: 2019, employees: "30-50", headquarters: "Vienna, Austria" },
   "5": { website: "https://medibot.health", founded: 2021, employees: "15-20", headquarters: "Seville, Spain" },
   "6": { website: "https://circularpack.com", founded: 2020, employees: "40-60", headquarters: "Rotterdam, Netherlands" },
+  "7": { website: "https://mistral.ai", founded: 2023, employees: "50-100", headquarters: "Paris, France" },
 };
 
 const companyImages: Record<string, { src: string; caption: string }[]> = {
@@ -62,6 +63,11 @@ const companyImages: Record<string, { src: string; caption: string }[]> = {
     { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=675&fit=crop", caption: "Our circular economy model in action at Zalando fulfillment" },
     { src: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=675&fit=crop", caption: "Over 2 million single-use boxes eliminated and counting" },
   ],
+  "7": [
+    { src: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop", caption: "Our team developing next-generation AI models in Paris" },
+    { src: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=675&fit=crop", caption: "Training infrastructure powering Mistral's open-weight models" },
+    { src: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&h=675&fit=crop", caption: "Collaborative AI research advancing European sovereignty" },
+  ],
 };
 
 const companyStories: Record<string, string> = {
@@ -71,16 +77,9 @@ const companyStories: Record<string, string> = {
   "4": "Thomas Weber spent years watching banks struggle with identity verification—slow processes, high costs, and privacy concerns. As a cybersecurity researcher, he knew there had to be a better way. In 2019, he founded SecureID Labs to build decentralized identity verification using blockchain technology. Their platform reduces KYC costs by 60% while giving users control over their data. Today, SecureID is integrated with Erste Bank and N26, processing thousands of verifications daily across Europe.",
   "5": "Dr. Carlos Ruiz worked in rural clinics across Andalusia for over a decade, seeing firsthand how limited resources affected patient care. When AI diagnostic tools became available, he realized they could bridge the gap between rural clinics and urban medical centers. In 2021, he founded MediBot to bring AI-powered diagnostics to underserved areas. Today, MediBot supports 45 clinics across Andalusia with 94% diagnostic accuracy, ensuring rural patients receive the same quality care as those in cities.",
   "6": "Sophie Janssen was frustrated by the mountains of cardboard boxes piling up from her online shopping. As a logistics engineer, she knew there had to be a better way. In 2020, she designed a reusable packaging system that could be returned, cleaned, and reused hundreds of times. Today, CircularPack has eliminated over 2 million single-use boxes through partnerships with Zalando and Coolblue, creating a circular economy for e-commerce packaging.",
+  "7": "When Arthur Mensch, Timothée Lacroix, and Guillaume Lample left Meta AI and Google DeepMind in 2023, they shared a vision: Europe deserved its own world-class AI lab. Within months, Mistral AI raised €385M—the largest seed round in European history. Their open-weight models—Mistral 7B, Mixtral 8x7B, and the flagship Mistral Large—now rival GPT-4 while costing 5x less to run. With partnerships spanning Microsoft Azure, IBM watsonx, and multiple EU governments, Mistral isn't just building AI models—they're building European AI independence.",
 };
 
-function generatePriceHistory(priceHistory: number[]) {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
-  const recentPrices = priceHistory.slice(-7);
-  return recentPrices.map((price, i) => ({
-    month: months[i] || `Month ${i + 1}`,
-    price: price,
-  }));
-}
 
 function transformToDetailData(
   opp: (typeof mockOpportunities)[0]
@@ -206,7 +205,6 @@ export default function OpportunityDetailPage({
   }
 
   const data = transformToDetailData(opportunity);
-  const priceHistory = generatePriceHistory(data.priceHistory);
 
   const [question, setQuestion] = useState("");
   const [investmentAmount, setInvestmentAmount] = useState(
@@ -215,12 +213,6 @@ export default function OpportunityDetailPage({
 
   const tractionRef = useRef<HTMLDivElement>(null);
   const calculatorRef = useRef<HTMLDivElement>(null);
-
-  const currentPrice = data.deal.pricePerShare;
-  const priceChange = (
-    ((currentPrice - priceHistory[0].price) / priceHistory[0].price) *
-    100
-  ).toFixed(1);
 
   const sharesFromInvestment = Math.floor(
     investmentAmount / data.investment.pricePerShare
@@ -242,8 +234,7 @@ export default function OpportunityDetailPage({
 
       <HeroSection
         data={data}
-        priceHistory={priceHistory}
-        priceChange={priceChange}
+        rawPriceHistory={data.priceHistory}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -268,6 +259,7 @@ export default function OpportunityDetailPage({
             <TeamSection
               members={data.team.members}
               founderOwnership={data.team.founderOwnership}
+              companyName={data.company.name}
             />
 
             <InvestmentTimelineSection timeline={data.deal.timeline} />
@@ -288,6 +280,8 @@ export default function OpportunityDetailPage({
                 stage={opportunity.stage}
                 sector={opportunity.sector}
                 totalShares={data.investment.totalShares}
+                companyName={data.company.name}
+                founderOwnership={data.team.founderOwnership}
               />
 
               <MyPositionCard

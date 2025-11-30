@@ -9,3 +9,4 @@ export { AskQuestionsSection } from "./ask-questions-section";
 export { FloatingInvestCTA } from "./floating-invest-cta";
 export { CompanyMetricsCard } from "./company-metrics-card";
 export { MyPositionCard } from "./my-position-card";
+export { CapTableDialog } from "./cap-table-dialog";

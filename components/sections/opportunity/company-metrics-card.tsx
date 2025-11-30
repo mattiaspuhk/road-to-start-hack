@@ -1,4 +1,5 @@
 import { TrendingUp, Clock, Users } from "lucide-react";
+import { CapTableDialog } from "./cap-table-dialog";
 
 interface CompanyMetricsCardProps {
   valuation: string;
@@ -6,6 +7,8 @@ interface CompanyMetricsCardProps {
   stage: string;
   sector: string;
   totalShares: number;
+  companyName: string;
+  founderOwnership?: number;
 }
 
 export function CompanyMetricsCard({
@@ -14,6 +17,8 @@ export function CompanyMetricsCard({
   stage,
   sector,
   totalShares,
+  companyName,
+  founderOwnership,
 }: CompanyMetricsCardProps) {
   return (
     <div className="bg-gradient-to-br from-muted/80 to-muted/30 rounded-2xl border border-border p-6">
@@ -49,6 +54,13 @@ export function CompanyMetricsCard({
             <p className="text-xs text-muted-foreground mb-1">Sector</p>
             <p className="text-sm font-medium text-foreground">{sector}</p>
           </div>
+        </div>
+
+        <div className="pt-4 border-t border-border">
+          <CapTableDialog
+            companyName={companyName}
+            founderOwnership={founderOwnership}
+          />
         </div>
       </div>
     </div>

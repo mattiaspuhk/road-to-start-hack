@@ -4,9 +4,10 @@ import type { TeamMember } from "@/lib/opportunity-detail-types";
 interface TeamSectionProps {
   members: TeamMember[];
   founderOwnership: number;
+  companyName: string;
 }
 
-export function TeamSection({ members, founderOwnership }: TeamSectionProps) {
+export function TeamSection({ members, founderOwnership, companyName }: TeamSectionProps) {
   return (
     <section className="mb-20">
       <div className="flex items-center gap-3 mb-8">
@@ -28,11 +29,13 @@ export function TeamSection({ members, founderOwnership }: TeamSectionProps) {
                   .join("")}
               </span>
             </div>
-            <div>
-              <p className="text-lg font-medium text-foreground">
-                {member.name}
-              </p>
-              <p className="text-sm text-primary mb-2">{member.role}</p>
+            <div className="flex-1">
+              <div>
+                <p className="text-lg font-medium text-foreground">
+                  {member.name}
+                </p>
+                <p className="text-sm text-primary mb-2">{member.role}</p>
+              </div>
               <p className="text-sm text-muted-foreground">
                 {member.background}
               </p>

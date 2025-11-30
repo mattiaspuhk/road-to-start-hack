@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Wallet, Vote } from "lucide-react";
+import { Menu, X, Wallet, Vote, GraduationCap } from "lucide-react";
 import { UserButton, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import {
   NavigationMenu,
@@ -54,6 +54,20 @@ export const Navbar = () => {
                       )}
                     >
                       Opportunities
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/learn"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "bg-transparent",
+                        isActive("/learn") && "text-accent-foreground"
+                      )}
+                    >
+                      Learn
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -163,6 +177,19 @@ export const Navbar = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Opportunities
+              </Link>
+              <Link
+                href="/learn"
+                className={cn(
+                  "text-sm transition-colors flex items-center gap-2",
+                  isActive("/learn")
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <GraduationCap className="w-4 h-4" />
+                Learn
               </Link>
               {isSignedIn && (
                 <div className="flex flex-col gap-2 pl-4 border-l border-border">

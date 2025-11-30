@@ -222,6 +222,37 @@ export const mockOpportunities: Opportunity[] = [
     votingPremium: 2.0,
     votingPremiumType: "fixed",
   },
+  {
+    id: "7",
+    name: "Mistral AI",
+    tagline: "Building open-source large language models for European AI sovereignty",
+    sector: "DeepTech",
+    vertical: "Artificial Intelligence",
+    stage: "Series B",
+    location: "France",
+    foundingYear: 2023,
+    sharesAvailablePercent: 3,
+    valuation: "€5.8B",
+    minInvestment: 1000,
+    runwayMonths: 36,
+    fundingProgress: 22,
+    euDomiciled: true,
+    audited: true,
+    founderName: "Arthur Mensch",
+    founderTitle: "CEO & Co-founder",
+    leadInvestor: "Andreessen Horowitz",
+    impactHeadline: "Building Europe's Answer to OpenAI",
+    businessHook:
+      "Open-weight LLMs rivaling GPT-4 at a fraction of the cost. Partnerships with Microsoft, IBM, and European governments.",
+    sharePrice: 245.80,
+    priceHistory: [
+      180.0, 185.5, 192.0, 188.5, 195.0, 201.5, 198.0, 205.5, 212.0, 208.5,
+      215.0, 221.5, 218.0, 225.5, 232.0, 228.5, 235.0, 241.5, 238.0, 244.5,
+      240.0, 243.5, 246.0, 242.5, 245.0, 248.5, 244.0, 246.5, 245.0, 245.80,
+    ],
+    votingPremium: 0.20,
+    votingPremiumType: "percentage",
+  },
 ];
 
 export interface OpportunityFilters {

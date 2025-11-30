@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,13 +25,16 @@ import {
 } from "recharts";
 import type { OpportunityDetailData, PriceHistoryPoint } from "@/lib/opportunity-detail-types";
 
+type Timeframe = "1D" | "1W" | "1M" | "1Y" | "YTD";
+
+const timeframes: Timeframe[] = ["1D", "1W", "1M", "1Y", "YTD"];
+
 interface HeroSectionProps {
   data: OpportunityDetailData;
-  priceHistory: PriceHistoryPoint[];
-  priceChange: string;
+  rawPriceHistory: number[];
 }
 
-export function HeroSection({ data, priceHistory, priceChange }: HeroSectionProps) {
+export function HeroSection({ data, rawPriceHistory }: HeroSectionProps) {
   const currentPrice = data.deal.pricePerShare;
 
   return (
@@ -134,8 +138,7 @@ export function HeroSection({ data, priceHistory, priceChange }: HeroSectionProp
 
           <SharePriceCard
             currentPrice={currentPrice}
-            priceChange={priceChange}
-            priceHistory={priceHistory}
+            rawPriceHistory={rawPriceHistory}
             currency={data.deal.currency}
             valuation={data.deal.valuation}
             leadInvestor={data.company.leadInvestor}
@@ -150,8 +153,7 @@ export function HeroSection({ data, priceHistory, priceChange }: HeroSectionProp
 
 interface SharePriceCardProps {
   currentPrice: number;
-  priceChange: string;
-  priceHistory: PriceHistoryPoint[];
+  rawPriceHistory: number[];
   currency: string;
   valuation: string;
   leadInvestor: string;
@@ -159,16 +161,101 @@ interface SharePriceCardProps {
   investmentCurrency: string;
 }
 
+function generateChartData(rawPriceHistory: number[], timeframe: Timeframe) {
+  const now = new Date();
+  const currentMonth = now.getMonth();
+
+  switch (timeframe) {
+    case "1D": {
+      const prices = rawPriceHistory.slice(-8);
+      const hours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM"];
+      return prices.map((price, i) => ({
+        label: hours[i] || `${9 + i}:00`,
+        price,
+      }));
+    }
+    case "1W": {
+      const prices = rawPriceHistory.slice(-7);
+      const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      return prices.map((price, i) => ({
+        label: days[i],
+        price,
+      }));
+    }
+    case "1M": {
+      const prices = rawPriceHistory.slice(-30);
+      return prices.map((price, i) => ({
+        label: i % 7 === 0 ? `Day ${i + 1}` : "",
+        price,
+      }));
+    }
+    case "1Y": {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const step = Math.max(1, Math.floor(rawPriceHistory.length / 12));
+      const prices: number[] = [];
+      for (let i = 0; i < 12 && i * step < rawPriceHistory.length; i++) {
+        prices.push(rawPriceHistory[i * step]);
+      }
+      return prices.map((price, i) => ({
+        label: months[i],
+        price,
+      }));
+    }
+    case "YTD": {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const monthsToShow = currentMonth + 1;
+      const step = Math.max(1, Math.floor(rawPriceHistory.length / monthsToShow));
+      const prices: number[] = [];
+      for (let i = 0; i < monthsToShow && i * step < rawPriceHistory.length; i++) {
+        prices.push(rawPriceHistory[i * step]);
+      }
+      return prices.map((price, i) => ({
+        label: months[i],
+        price,
+      }));
+    }
+    default:
+      return rawPriceHistory.slice(-7).map((price, i) => ({
+        label: `Day ${i + 1}`,
+        price,
+      }));
+  }
+}
+
+function getTimeframeLabel(timeframe: Timeframe): string {
+  switch (timeframe) {
+    case "1D": return "Today";
+    case "1W": return "Past week";
+    case "1M": return "Past month";
+    case "1Y": return "Past year";
+    case "YTD": return "Year to date";
+    default: return "";
+  }
+}
+
 function SharePriceCard({
   currentPrice,
-  priceChange,
-  priceHistory,
+  rawPriceHistory,
   currency,
   valuation,
   leadInvestor,
   minInvestment,
   investmentCurrency,
 }: SharePriceCardProps) {
+  const [selectedTimeframe, setSelectedTimeframe] = useState<Timeframe>("1M");
+
+  const chartData = useMemo(
+    () => generateChartData(rawPriceHistory, selectedTimeframe),
+    [rawPriceHistory, selectedTimeframe]
+  );
+
+  const priceChange = useMemo(() => {
+    if (chartData.length < 2) return "0.0";
+    const startPrice = chartData[0].price;
+    const change = ((currentPrice - startPrice) / startPrice) * 100;
+    return change.toFixed(1);
+  }, [chartData, currentPrice]);
+
   return (
     <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-4">
@@ -192,14 +279,30 @@ function SharePriceCard({
               {priceChange}%
             </span>
           </div>
-          <p className="text-xs text-white/40 mt-1">Since initial offering</p>
+          <p className="text-xs text-white/40 mt-1">{getTimeframeLabel(selectedTimeframe)}</p>
         </div>
       </div>
 
-      <div className="h-40 mt-4">
+      <div className="flex gap-1 mb-4">
+        {timeframes.map((tf) => (
+          <button
+            key={tf}
+            onClick={() => setSelectedTimeframe(tf)}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              selectedTimeframe === tf
+                ? "bg-white/20 text-white"
+                : "text-white/50 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            {tf}
+          </button>
+        ))}
+      </div>
+
+      <div className="h-40">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={priceHistory}
+            data={chartData}
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
@@ -223,7 +326,7 @@ function SharePriceCard({
               </linearGradient>
             </defs>
             <XAxis
-              dataKey="month"
+              dataKey="label"
               axisLine={false}
               tickLine={false}
               tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }}
@@ -245,7 +348,7 @@ function SharePriceCard({
                         €{Number(payload[0].value).toFixed(2)}
                       </p>
                       <p className="text-white/50 text-xs">
-                        {payload[0].payload.month}
+                        {payload[0].payload.label}
                       </p>
                     </div>
                   );
